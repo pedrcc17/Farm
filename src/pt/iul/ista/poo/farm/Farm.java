@@ -7,7 +7,7 @@ import java.util.Observer;
 
 import pt.iul.ista.poo.farm.objects.Farmer;
 import pt.iul.ista.poo.farm.objects.Land;
-import pt.iul.ista.poo.farm.objects.Tomatoe;
+import pt.iul.ista.poo.farm.objects.Tomato;
 import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.gui.ImageTile;
 import pt.iul.ista.poo.utils.Direction;
@@ -58,7 +58,7 @@ public class Farm implements Observer {
 		Point2D pInicial = new Point2D (0,0);
 		Point2D i = new Point2D(1,1);
 		Farmer ze = new Farmer (pInicial);
-		Tomatoe tom = new Tomatoe(i);		
+		Tomato tom = new Tomato(i);		
 		for ( int x = 0; x != 6; x++){
 			for ( int y = 0;  y!= 8; y++){
 				Point2D gr = new Point2D(x,y);
