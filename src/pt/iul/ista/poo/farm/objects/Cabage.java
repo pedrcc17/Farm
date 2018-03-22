@@ -8,14 +8,11 @@ public class Cabage extends Vegetable {
 		super(position, "cabage", 2);
 		rottenThreshold = 30;
 		ripeThreshold = 10;
+		cicle = 0;
 	}
+
 	
-
-
-
-
-
-
-
-
+	
+	
+	
 }

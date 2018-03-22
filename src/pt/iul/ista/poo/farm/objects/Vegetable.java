@@ -1,19 +1,20 @@
 package pt.iul.ista.poo.farm.objects;
 import pt.iul.ista.poo.utils.Point2D;
 
-public abstract class Vegetable extends FarmObject implements Interactable {
+public abstract class Vegetable extends FarmObject {
 	
 	protected Point2D position;
 	protected String name;
-	protected int level;
+	protected int layer;
 	protected int ripeThreshold;
 	protected int rottenThreshold;
+	protected int cicle;
 	
 
-	public Vegetable(Point2D position, String name, int level) {
+	public Vegetable(Point2D position, String name, int layer) {
 		super(position);
 		this.name = name;
-		this.level = level;
+		this.layer = layer;
 	}
 
 	
@@ -29,13 +30,7 @@ public abstract class Vegetable extends FarmObject implements Interactable {
 
 	@Override
 	public int getLayer() {
-		return level;
-	}
-	
-	
-	@Override
-	public void interact(){
-		
+		return layer;
 	}
 	
 	

@@ -56,9 +56,7 @@ public class Farm implements Observer {
 		// images.addAll(...);
 		
 		Point2D pInicial = new Point2D (0,0);
-		Point2D i = new Point2D(1,1);
-		Farmer ze = new Farmer (pInicial);
-		Tomato tom = new Tomato(i);		
+		ze = new Farmer (pInicial);		
 		for ( int x = 0; x != 6; x++){
 			for ( int y = 0;  y!= 8; y++){
 				Point2D gr = new Point2D(x,y);
@@ -68,7 +66,6 @@ public class Farm implements Observer {
 		}
 		
 		images.add(ze);
-		images.add(tom);
 		ImageMatrixGUI.getInstance().addImages(images);
 		ImageMatrixGUI.getInstance().update();
 	}
@@ -85,9 +82,10 @@ public class Farm implements Observer {
 		System.out.println("Update sent " + a);
 		// TODO
 		if (a instanceof Integer) {
-			int key = (Integer) a;
+			int key = (Integer) a ;
 			if (Direction.isDirection(key)) {
-				System.out.println("Update is a Direction " + Direction.directionFor(key));
+			System.out.println("Update is a Direction " + Direction.directionFor(key));
+			ze.moveTo(Direction.directionFor(key));
 			}
 		}
 		

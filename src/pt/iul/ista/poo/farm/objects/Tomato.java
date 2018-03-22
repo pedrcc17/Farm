@@ -10,8 +10,5 @@ public class Tomato extends Vegetable {
 		ripeThreshold = 15;
 	}
 	
-	
-
-	
 
 }
