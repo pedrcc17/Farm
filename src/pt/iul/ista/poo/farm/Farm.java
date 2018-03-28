@@ -56,7 +56,7 @@ public class Farm implements Observer {
 		// images.addAll(...);
 		
 		Point2D pInicial = new Point2D (0,0);
-		ze = new Farmer (pInicial);		
+		ze = new Farmer (pInicial);
 		for ( int x = 0; x != 6; x++){
 			for ( int y = 0;  y!= 8; y++){
 				Point2D gr = new Point2D(x,y);
@@ -88,7 +88,6 @@ public class Farm implements Observer {
 			ze.moveTo(Direction.directionFor(key));
 			}
 		}
-		
 		ImageMatrixGUI.getInstance().setStatusMessage("Points: ");
 		ImageMatrixGUI.getInstance().update();
 	}
@@ -107,5 +106,5 @@ public class Farm implements Observer {
 		Farm f = new Farm(5, 7);
 		f.play();
 	}
-
+	
 }
