@@ -54,11 +54,14 @@ public class Farm implements Observer {
 		List<ImageTile> images = new ArrayList<ImageTile>();
 
 		// images.addAll(...);
+		Point2D pt = new Point2D(4,4);
+		Tomato tomato = new Tomato(pt);
+//		images.add(tomato);
 		
 		Point2D pInicial = new Point2D (0,0);
 		ze = new Farmer (pInicial);		
-		for ( int x = 0; x != 6; x++){
-			for ( int y = 0;  y!= 8; y++){
+		for ( int x = 0; x <= max_x; x++){
+			for ( int y = 0;  y <= max_y; y++){
 				Point2D gr = new Point2D(x,y);
 				Land gr1 = new Land (gr);
 				images.add(gr1);
