@@ -16,7 +16,8 @@ import pt.iul.ista.poo.utils.Vector2D;
 
 public class Farm implements Observer {
 
-	// TODO
+	private Land[][] landMatrix; 
+	
 	private static final String SAVE_FNAME = "config/savedGame";
 
 	private static final int MIN_X = 5;
@@ -38,6 +39,8 @@ public class Farm implements Observer {
 		this.max_y = max_y;
 
 		INSTANCE = this;
+		
+		landMatrix = new Land[max_x][max_y];
 
 
 		ImageMatrixGUI.setSize(max_x, max_y);
@@ -56,12 +59,13 @@ public class Farm implements Observer {
 		Point2D pInicial = new Point2D (0,0);
 		farmer = new Farmer (pInicial);
 		// Gravar os objectos Land numa matriz
-		for ( int x = 0; x <= max_x; x++){
-			for ( int y = 0;  y <= max_y; y++){
-				Point2D gr = new Point2D(x,y);
-				Land gr1 = new Land (gr);
-				images.add(gr1);
-			}
+		for ( int x = 0; x < max_x; x++){
+			for ( int y = 0;  y < max_y; y++){
+				Point2D landPosition = new Point2D(x,y);
+				Land land = new Land (landPosition);
+				images.add(land);
+				landMatrix[x][y] = land;
+				}
 		}
 
 		images.add(farmer);
@@ -85,6 +89,13 @@ public class Farm implements Observer {
 			if (Direction.isDirection(key)) {
 				System.out.println("Update is a Direction " + Direction.directionFor(key));
 				farmer.moveTo(Direction.directionFor(key));
+				if(farmer.isInteract()){
+					Land land = landMatrix[farmer.getPosition().getX()][farmer.getPosition().getY()];
+					land.interact();
+					ImageMatrixGUI.getInstance().addImage(land);
+					ImageMatrixGUI.getInstance().update();
+					farmer.setInteract(false);
+				}
 			} else if (key == 32) {
 				farmer.setInteract(true);
 			}

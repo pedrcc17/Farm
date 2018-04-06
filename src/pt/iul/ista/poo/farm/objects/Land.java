@@ -24,6 +24,7 @@ public class Land extends FarmObject implements Interactable  {
 		if(! plowed){
 			name = "plowed";
 			plowed = true;
+			System.out.println(plowed);
 			return;
 		}
 		if(vegetable == null) {
@@ -41,7 +42,17 @@ public class Land extends FarmObject implements Interactable  {
 		ImageMatrixGUI.getInstance().addImage(vegetable);
 		ImageMatrixGUI.getInstance().update();
 	}
+	
+	@Override
+	public String getName(){
+		return name;
+	}
 
+//	@Override
+//	public int getLayer(){
+//		return 0;
+//	}
+	
 
 
 

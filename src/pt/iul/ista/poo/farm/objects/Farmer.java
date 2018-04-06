@@ -31,16 +31,21 @@ public class Farmer extends FarmObject {
 		if (ImageMatrixGUI.getInstance().isWithinBounds(newPosition) == false) {
 			return;
 		};
-		setPosition(newPosition);
-		if (interact == true) {
-			
-		}
+		setPosition(newPosition);		
 	}
+
 
 	public void setInteract(boolean interact) {
 		this.interact = interact;
 	}
-
-
+	
+	public boolean isInteract(){
+		return interact;
+	}
+	
+//	@Override
+//	public int getLayer(){
+//		return 1;
+//	}
 }
 
