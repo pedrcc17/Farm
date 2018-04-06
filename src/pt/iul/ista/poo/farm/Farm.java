@@ -23,9 +23,9 @@ public class Farm implements Observer {
 	private static final int MIN_Y = 5;
 
 	private static Farm INSTANCE  = null;
-	
+
 	private Farmer farmer;
-	
+
 
 	private int max_x;
 	private int max_y;
@@ -33,16 +33,16 @@ public class Farm implements Observer {
 	private Farm(int max_x, int max_y) {
 		if (max_x < 5 || max_y < 5)
 			throw new IllegalArgumentException();
-		
+
 		this.max_x = max_x;
 		this.max_y = max_y;
 
-			INSTANCE = this;
-			
-		
+		INSTANCE = this;
+
+
 		ImageMatrixGUI.setSize(max_x, max_y);
-		
-		// Não usar ImageMatrixGUI antes de inicializar o tamanho		
+
+		// Nï¿½o usar ImageMatrixGUI antes de inicializar o tamanho		
 		// TODO
 
 		loadScenario();
@@ -53,13 +53,9 @@ public class Farm implements Observer {
 		// TODO
 		List<ImageTile> images = new ArrayList<ImageTile>();
 
-		// images.addAll(...);
-		Point2D pTomate = new Point2D(3,3);
-		Tomato tomato = new Tomato(pTomate);
-		images.add(tomato);
-		
 		Point2D pInicial = new Point2D (0,0);
 		farmer = new Farmer (pInicial);
+		// Gravar os objectos Land numa matriz
 		for ( int x = 0; x <= max_x; x++){
 			for ( int y = 0;  y <= max_y; y++){
 				Point2D gr = new Point2D(x,y);
@@ -67,13 +63,13 @@ public class Farm implements Observer {
 				images.add(gr1);
 			}
 		}
-		
+
 		images.add(farmer);
 		ImageMatrixGUI.getInstance().addImages(images);
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	
+
 
 	private void loadScenario() {
 		// TODO
@@ -87,15 +83,17 @@ public class Farm implements Observer {
 		if (a instanceof Integer) {
 			int key = (Integer) a ;
 			if (Direction.isDirection(key)) {
-			System.out.println("Update is a Direction " + Direction.directionFor(key));
-			farmer.moveTo(Direction.directionFor(key));
+				System.out.println("Update is a Direction " + Direction.directionFor(key));
+				farmer.moveTo(Direction.directionFor(key));
+			} else if (key == 32) {
+				farmer.setInteract(true);
 			}
 		}
 		ImageMatrixGUI.getInstance().setStatusMessage("Points: ");
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	// Não precisa de alterar nada a partir deste ponto
+	// Nï¿½o precisa de alterar nada a partir deste ponto
 	private void play() {
 		ImageMatrixGUI.getInstance().addObserver(this);
 		ImageMatrixGUI.getInstance().go();
@@ -109,5 +107,5 @@ public class Farm implements Observer {
 		Farm f = new Farm(5, 7);
 		f.play();
 	}
-	
+
 }

@@ -22,6 +22,7 @@ public class Land extends FarmObject implements Interactable  {
 	@Override
 	public void interact(){
 		if(! plowed){
+			name = "plowed";
 			plowed = true;
 			return;
 		}
@@ -37,6 +38,8 @@ public class Land extends FarmObject implements Interactable  {
 		if(rnd.nextBoolean() == true)
 			vegetable = new Cabage(getPosition());
 		else vegetable = new Tomato(getPosition());
+		ImageMatrixGUI.getInstance().addImage(vegetable);
+		ImageMatrixGUI.getInstance().update();
 	}
 
 
