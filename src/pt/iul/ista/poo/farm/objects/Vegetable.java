@@ -3,14 +3,14 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public abstract class Vegetable extends FarmObject implements Interactable, Updatable {
 
-	private Point2D position;
+
 	private String name;
 	private int layer;
 	private int ripeThreshold;
 	private int rottenThreshold;
 	private int cycleCount;
-	private int ripeCount;
-	private int rottenCount;
+	private int cyclesToRipe;
+	private int cyclesToRot;
 	
 
 
@@ -19,9 +19,9 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 		this.name = name;
 		this.layer = layer;
 		this.ripeThreshold = ripeThreshold;
-		this.ripeCount = ripeThreshold;
+		this.cyclesToRipe = ripeThreshold;
 		this.rottenThreshold = rottenThreshold;
-		this.rottenCount = rottenThreshold;
+		this.cyclesToRot = rottenThreshold;
 	}
 
 
@@ -30,10 +30,6 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 		return name;
 	}
 
-	@Override
-	public Point2D getPosition() {
-		return position;
-	}
 
 	@Override
 	public int getLayer() {
@@ -50,21 +46,21 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 
 	
 	public void rot(){
-		rottenCount--;
+		cyclesToRot--;
 	}
 
 	public boolean isRotten(){
-		if(rottenCount <= 0) 
+		if(cyclesToRot <= 0) 
 			return true;
 		return false;
 	}
 	
 	public void ripen(int n){
-		ripeCount -= n;
+		cyclesToRipe -= n;
 	}
 	
 	public boolean isRipe(){
-		if(ripeCount <= 0)
+		if(cyclesToRipe <= 0)
 			return true;
 		return false;
 	}
