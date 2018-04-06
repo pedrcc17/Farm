@@ -24,7 +24,6 @@ public class Land extends FarmObject implements Interactable  {
 		if(! plowed){
 			name = "plowed";
 			plowed = true;
-			System.out.println(plowed);
 			return;
 		}
 		if(vegetable == null) {
@@ -48,6 +47,12 @@ public class Land extends FarmObject implements Interactable  {
 		return name;
 	}
 
+	
+	//incrementa ciclo de vegetais (plantados)
+	public void incrementCycle(){
+		if(vegetable == null) return;
+		vegetable.incrementCycle();
+	}
 //	@Override
 //	public int getLayer(){
 //		return 0;

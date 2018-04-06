@@ -79,23 +79,40 @@ public class Farm implements Observer {
 		// TODO
 		registerAll();
 	}
+	
+	//incrementa ciclos de todos os vegetables plantados
+	private void incrementCycle(){
+		for(int i = 0 ; i < landMatrix.length ; i++) {
+			for(int j = 0 ; j < landMatrix[i].length ; j++) {
+				Land l = landMatrix[i][j];
+				l.incrementCycle();
+			}
+		}
+	}
 
+	
 	@Override
 	public void update(Observable gui, Object a) {
 		System.out.println("Update sent " + a);
 		// TODO
 		if (a instanceof Integer) {
+			//sempre que e clicada uma tecla lança o incrementCycle() definido acima
+			incrementCycle();
+			//if clicada uma tecla de direcao -> farmer move-se
+			//if clicada tecla de espaço -> ativa a interacao
+			//quando interacao tiver ativada, escolhe-se a direcao que se quer interagir(tecla direcao) -> farmer interage com land e nao se move
 			int key = (Integer) a ;
 			if (Direction.isDirection(key)) {
 				System.out.println("Update is a Direction " + Direction.directionFor(key));
-				farmer.moveTo(Direction.directionFor(key));
 				if(farmer.isInteract()){
-					Land land = landMatrix[farmer.getPosition().getX()][farmer.getPosition().getY()];
+					Point2D newPosition = farmer.getPosition().plus(Direction.directionFor(key).asVector());
+					Land land = landMatrix[newPosition.getX()][newPosition.getY()];
 					land.interact();
 					ImageMatrixGUI.getInstance().addImage(land);
 					ImageMatrixGUI.getInstance().update();
 					farmer.setInteract(false);
 				}
+				else farmer.moveTo(Direction.directionFor(key));
 			} else if (key == 32) {
 				farmer.setInteract(true);
 			}
@@ -104,7 +121,7 @@ public class Farm implements Observer {
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	// Nï¿½o precisa de alterar nada a partir deste ponto
+	// Nao precisa de alterar nada a partir deste ponto
 	private void play() {
 		ImageMatrixGUI.getInstance().addObserver(this);
 		ImageMatrixGUI.getInstance().go();
