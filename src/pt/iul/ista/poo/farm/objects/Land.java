@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.omg.CORBA.VersionSpecHelper;
 
+import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Land extends FarmObject implements Interactable  {

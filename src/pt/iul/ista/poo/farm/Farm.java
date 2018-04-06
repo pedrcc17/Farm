@@ -24,7 +24,7 @@ public class Farm implements Observer {
 
 	private static Farm INSTANCE  = null;
 	
-	private Farmer ze;
+	private Farmer farmer;
 	
 
 	private int max_x;
@@ -54,9 +54,12 @@ public class Farm implements Observer {
 		List<ImageTile> images = new ArrayList<ImageTile>();
 
 		// images.addAll(...);
-
+		Point2D pTomate = new Point2D(3,3);
+		Tomato tomato = new Tomato(pTomate);
+		images.add(tomato);
+		
 		Point2D pInicial = new Point2D (0,0);
-		ze = new Farmer (pInicial);
+		farmer = new Farmer (pInicial);
 		for ( int x = 0; x <= max_x; x++){
 			for ( int y = 0;  y <= max_y; y++){
 				Point2D gr = new Point2D(x,y);
@@ -65,7 +68,7 @@ public class Farm implements Observer {
 			}
 		}
 		
-		images.add(ze);
+		images.add(farmer);
 		ImageMatrixGUI.getInstance().addImages(images);
 		ImageMatrixGUI.getInstance().update();
 	}
@@ -85,7 +88,7 @@ public class Farm implements Observer {
 			int key = (Integer) a ;
 			if (Direction.isDirection(key)) {
 			System.out.println("Update is a Direction " + Direction.directionFor(key));
-			ze.moveTo(Direction.directionFor(key));
+			farmer.moveTo(Direction.directionFor(key));
 			}
 		}
 		ImageMatrixGUI.getInstance().setStatusMessage("Points: ");

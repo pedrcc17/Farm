@@ -1,7 +1,7 @@
 package pt.iul.ista.poo.farm.objects;
 import pt.iul.ista.poo.utils.Point2D;
 
-public abstract class Vegetable extends FarmObject implements Interactable {
+public abstract class Vegetable extends FarmObject implements Interactable, Updatable {
 
 	private Point2D position;
 	private String name;
@@ -24,11 +24,6 @@ public abstract class Vegetable extends FarmObject implements Interactable {
 		this.rottenCount = rottenThreshold;
 	}
 
-	
-	
-	public void incrementCycle(){
-		cycleCount++;
-	}
 
 	@Override
 	public String getName() {
@@ -44,8 +39,14 @@ public abstract class Vegetable extends FarmObject implements Interactable {
 	public int getLayer() {
 		return layer;
 	}
-
 	
+	
+	
+	@Override
+	public void incrementCycle(){
+		cycleCount++;
+	}
+
 
 	
 	public void rot(){
