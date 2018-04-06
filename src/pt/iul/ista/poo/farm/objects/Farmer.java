@@ -12,26 +12,26 @@ public class Farmer extends FarmObject {
 	}
 
 	public void moveTo(Direction b) {
-		Point2D nova = null;
+		Point2D newPosition = null;
 		switch (b) {
 		case UP:
-			nova = getPosition().plus((Direction.UP).asVector());
+			newPosition = getPosition().plus((Direction.UP).asVector());
 			break;
 		case DOWN:
-			nova = getPosition().plus((Direction.DOWN).asVector());
+			newPosition = getPosition().plus((Direction.DOWN).asVector());
 			break;
 		case RIGHT: 
-			nova = getPosition().plus((Direction.RIGHT).asVector());
+			newPosition = getPosition().plus((Direction.RIGHT).asVector());
 			break;
 		case LEFT:
-			nova = getPosition().plus((Direction.LEFT).asVector());
+			newPosition = getPosition().plus((Direction.LEFT).asVector());
 			break;
 		}
 
-		if (ImageMatrixGUI.getInstance().isWithinBounds(nova) == false) {
+		if (ImageMatrixGUI.getInstance().isWithinBounds(newPosition) == false) {
 			return;
 		};
-		setPosition(nova);
+		setPosition(newPosition);
 		if (interact == true) {
 			
 		}
