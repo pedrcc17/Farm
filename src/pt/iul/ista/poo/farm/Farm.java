@@ -17,7 +17,7 @@ import pt.iul.ista.poo.utils.Vector2D;
 public class Farm implements Observer {
 
 	private Land[][] landMatrix; 
-	
+
 	private static final String SAVE_FNAME = "config/savedGame";
 
 	private static final int MIN_X = 5;
@@ -39,7 +39,7 @@ public class Farm implements Observer {
 		this.max_y = max_y;
 
 		INSTANCE = this;
-		
+
 		landMatrix = new Land[max_x][max_y];
 
 
@@ -65,7 +65,7 @@ public class Farm implements Observer {
 				Land land = new Land (landPosition);
 				images.add(land);
 				landMatrix[x][y] = land;
-				}
+			}
 		}
 
 		images.add(farmer);
@@ -79,7 +79,7 @@ public class Farm implements Observer {
 		// TODO
 		registerAll();
 	}
-	
+
 	//incrementa ciclos de todos os vegetables plantados
 	private void incrementCycle(){
 		for(int i = 0 ; i < landMatrix.length ; i++) {
@@ -90,7 +90,7 @@ public class Farm implements Observer {
 		}
 	}
 
-	
+
 	@Override
 	public void update(Observable gui, Object a) {
 		System.out.println("Update sent " + a);
@@ -100,7 +100,8 @@ public class Farm implements Observer {
 			incrementCycle();
 			//if clicada uma tecla de direcao -> farmer move-se
 			//if clicada tecla de espaço -> ativa a interacao
-			//quando interacao tiver ativada, escolhe-se a direcao que se quer interagir(tecla direcao) -> farmer interage com land e nao se move
+			//quando interacao tiver ativada, escolhe-se a direcao que se quer 
+			//                   interagir(tecla direcao) -> farmer interage com land e nao se move
 			int key = (Integer) a ;
 			if (Direction.isDirection(key)) {
 				System.out.println("Update is a Direction " + Direction.directionFor(key));

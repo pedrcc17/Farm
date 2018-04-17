@@ -29,9 +29,6 @@ public class Tomato extends Vegetable {
 	public void interact(){
 		if(! isRotten())
 			cyclesAfterTakenCare = 0;
-		System.out.println("cycles to ripe : " + getCyclesToRipe());
-		System.out.println(isRipe());
-		System.out.println(isRotten());
 	}
 
 	@Override

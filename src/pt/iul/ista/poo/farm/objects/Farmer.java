@@ -43,9 +43,9 @@ public class Farmer extends FarmObject {
 		return interact;
 	}
 	
-//	@Override
-//	public int getLayer(){
-//		return 1;
-//	}
+	@Override
+	public int getLayer(){
+		return 3;
+	}
 }
 

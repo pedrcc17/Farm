@@ -20,9 +20,6 @@ public class Cabage extends Vegetable {
 	public void interact(){
 		if(! isRotten())
 			ripen(3);
-		System.out.println("cycles to ripe : " + getCyclesToRipe());
-		System.out.println(isRipe());
-		System.out.println(isRotten());
 	}
 
 

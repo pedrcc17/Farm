@@ -21,16 +21,20 @@ public class Land extends FarmObject implements Interactable  {
 
 	@Override
 	public void interact(){
-		if(! plowed){
-			name = "plowed";
-			plowed = true;
-			return;
-		}
 		if(vegetable == null) {
+			if(! plowed){
+				name = "plowed";
+				plowed = true;
+				return;
+			}
 			plantVegetable();
 			return;
 		}
+		if(!(vegetable.isRotten() || vegetable.isRipe()))
 		vegetable.interact();
+		else removeVegetable();
+
+
 	}
 
 	private void plantVegetable(){
@@ -41,23 +45,32 @@ public class Land extends FarmObject implements Interactable  {
 		ImageMatrixGUI.getInstance().addImage(vegetable);
 		ImageMatrixGUI.getInstance().update();
 	}
-	
+
+	private void removeVegetable(){
+		//		if(vegetable.isRipe())  //add Points to farmer
+		ImageMatrixGUI.getInstance().removeImage(vegetable);
+		ImageMatrixGUI.getInstance().update();
+		vegetable = null;
+		plowed = false;
+		name = "land";
+	}
+
 	@Override
 	public String getName(){
 		return name;
 	}
 
-	
+
 	//incrementa ciclo de vegetais (plantados)
 	public void incrementCycle(){
 		if(vegetable == null) return;
 		vegetable.incrementCycle();
 	}
-//	@Override
-//	public int getLayer(){
-//		return 0;
-//	}
-	
+	//	@Override
+	//	public int getLayer(){
+	//		return 0;
+	//	}
+
 
 
 
