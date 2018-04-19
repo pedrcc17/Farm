@@ -15,7 +15,7 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 	public Vegetable(Point2D position, String name, int layer, int ripeThreshold, int rottenThreshold) {
 		super(position);
 		this.name = name;
-		this.layer = 0;
+		this.layer = 1;
 		this.cyclesToRipe = ripeThreshold;
 		this.cyclesToRot = rottenThreshold;
 		//		this.cycleCount = 0;
