@@ -8,7 +8,7 @@ public class Tomato extends Vegetable {
 	private int cyclesAfterTakenCare;
 
 	public Tomato(Point2D position) {
-		super(position, "planted", 2, 15, 25);
+		super(position, "planted", 15, 25);
 		this.cyclesAfterTakenCare = 0;
 	}
 

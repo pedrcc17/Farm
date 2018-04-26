@@ -5,17 +5,15 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 
 
 	private String name;
-	private int layer;
 	//	private int cycleCount;
 	private int cyclesToRipe;
 	private int cyclesToRot;
 
 
 	//cada vegetal tera valores para amadurecer e apodrecer diferentes que serao incializados com ripe e rotten Threshold
-	public Vegetable(Point2D position, String name, int layer, int ripeThreshold, int rottenThreshold) {
+	public Vegetable(Point2D position, String name, int ripeThreshold, int rottenThreshold) {
 		super(position);
 		this.name = name;
-		this.layer = layer;
 		this.cyclesToRipe = ripeThreshold;
 		this.cyclesToRot = rottenThreshold;
 		//		this.cycleCount = 0;
@@ -30,7 +28,7 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 
 	@Override
 	public int getLayer() {
-		return layer;
+		return 2;
 	}
 
 

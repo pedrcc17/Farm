@@ -5,6 +5,7 @@ import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Farmer extends FarmObject {
+	
 	private boolean interact;
 
 	public Farmer(Point2D p) {
@@ -45,7 +46,7 @@ public class Farmer extends FarmObject {
 	
 	@Override
 	public int getLayer(){
-		return 3;
+		return 4;
 	}
 }
 

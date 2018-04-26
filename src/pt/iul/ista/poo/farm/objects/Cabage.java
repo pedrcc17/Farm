@@ -5,7 +5,7 @@ import pt.iul.ista.poo.utils.Point2D;
 public class Cabage extends Vegetable {
 
 	public Cabage(Point2D position) {
-		super(position, "planted", 2, 10, 30);
+		super(position, "planted", 10, 30);
 	}
 
 
@@ -16,10 +16,10 @@ public class Cabage extends Vegetable {
 	}
 
 	@Override
-	//caso nao esteja podre, ao interagir, decrementa em 3 os ciclos restantes para amadurecer
+	//caso nao esteja podre, ao interagir, decrementa em 2 os ciclos restantes para amadurecer
 	public void interact(){
 		if(! isRotten())
-			ripen(3);
+			ripen(2);
 	}
 
 
