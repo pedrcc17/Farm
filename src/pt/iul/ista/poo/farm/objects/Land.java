@@ -22,7 +22,6 @@ public class Land extends FarmObject implements Interactable  {
 
 	@Override
 	public void interact(){
-//		name = "plowed";
 		plowed = true;
 	}
 

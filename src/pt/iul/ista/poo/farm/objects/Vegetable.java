@@ -5,7 +5,6 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 
 
 	private String name;
-	//	private int cycleCount;
 	private int cyclesToRipe;
 	private int cyclesToRot;
 
@@ -32,11 +31,7 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 	}
 
 
-	//   ++sem utilidade por agora++
-	//		@Override
-	//		public void incrementCycle(){
-	//			cycleCount++;
-	//		}
+	
 
 
 

@@ -33,6 +33,7 @@ public class Farm implements Observer {
 	private static Farm INSTANCE  = null;
 
 	private Farmer farmer;
+	private Sheep sheep;
 
 
 	private int max_x;
@@ -61,6 +62,15 @@ public class Farm implements Observer {
 
 	}
 
+
+
+	private Point2D randomPosition(){
+		Random rnd = new Random();
+		Point2D randomP = new Point2D(rnd.nextInt(max_x),rnd.nextInt(max_y));
+		return randomP;
+	}
+
+
 	private void registerAll() {
 		// TODO
 		List<ImageTile> images = new ArrayList<ImageTile>();
@@ -69,7 +79,10 @@ public class Farm implements Observer {
 		farmer = new Farmer (farmerInitialPosition);
 		farmObjects.add(farmer);
 
-		// Gravar os objectos Land numa matriz
+		sheep = new Sheep(randomPosition());
+		farmObjects.add(sheep);
+
+		// Gravar os objectos Land na list de farmObjects
 		for ( int x = 0; x < max_x; x++){
 			for ( int y = 0;  y < max_y; y++){
 				Point2D landPosition = new Point2D(x,y);
@@ -80,6 +93,7 @@ public class Farm implements Observer {
 		}
 
 		images.add(farmer);
+		images.add(sheep);
 		ImageMatrixGUI.getInstance().addImages(images);
 		ImageMatrixGUI.getInstance().update();
 	}
@@ -99,9 +113,9 @@ public class Farm implements Observer {
 		}
 	}
 
-//	 funcao retorna o objecto que devera ser interagido com base no layer
-//	 exemplo: caso haja Land e Vegetable numa mesma posicao, a funcao ira
-//	                    retornar o vegetable (pois tem maior layer)
+	//	 funcao retorna o objecto que devera ser interagido com base no layer
+	//	 exemplo: caso haja Land e Vegetable numa mesma posicao, a funcao ira
+	//	                    retornar o vegetable (pois tem maior layer)
 	private Interactable getObjectByPosition(Point2D newPosition){
 		//lista com o objetivo de guardar os objetos interactable com a mesma posicao
 		List<FarmObject> samePositionObjects = new ArrayList<FarmObject>();
@@ -120,7 +134,7 @@ public class Farm implements Observer {
 		}
 		return null;
 	}
-	
+
 
 	private void plantVegetable(Interactable i){
 		Random rnd = new Random();
@@ -138,11 +152,8 @@ public class Farm implements Observer {
 		farmObjects.remove(i);
 		ImageMatrixGUI.getInstance().removeImage((ImageTile)i);
 		ImageMatrixGUI.getInstance().update();
-		//		vegetable = null;
-		//		plowed = false;
-		//		name = "land";
 	}
-	
+
 	private void unPlow(Interactable i){
 		Interactable intr = getObjectByPosition(((FarmObject)i).getPosition());
 		if(intr instanceof Land)
@@ -161,11 +172,12 @@ public class Farm implements Observer {
 				removeVegetable(i);
 				unPlow(i);
 			} 
-			
+
 			else i.interact();
 		}
-		//		if(i instanceof Animal){
-		//		}
+		if(i instanceof Animal){
+			i.interact();
+		}
 	}
 
 

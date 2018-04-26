@@ -9,26 +9,34 @@ public class Sheep extends Animal {
 	
 	public Sheep(Point2D p){
 		super(p);
+		cyclesSinceEaten = 0;
 	}
 	
 	
 	@Override
 	public void interact(){
-		setCyclesSinceEaten(0);
+		cyclesSinceEaten = 0;
 	}
 	
 	@Override
 	public void incrementCycle(){
 		cyclesSinceEaten++;
+		if(cyclesSinceEaten > 10)
+			startMoving();
+		if(cyclesSinceEaten > 20) 
+			isStarving = true;
 	}
 	
-	private int getCyclesSinceEaten() {
+	public int getCyclesSinceEaten() {
 		return cyclesSinceEaten;
 	}
-
-	private void setCyclesSinceEaten(int cyclesSinceEaten) {
-		this.cyclesSinceEaten = cyclesSinceEaten;
+	
+	
+	//TODO 
+	private void startMoving(){
 	}
+
+
 
 	public boolean isStarving() {
 		if(cyclesSinceEaten > 10) return true;
