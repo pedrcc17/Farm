@@ -1,33 +1,29 @@
 package pt.iul.ista.poo.farm.objects;
+import pt.iul.ista.poo.farm.Farm;
 import pt.iul.ista.poo.utils.Point2D;
 
 public abstract class Vegetable extends FarmObject implements Interactable, Updatable {
 
 
-	private String name;
+
 	private int cyclesToRipe;
 	private int cyclesToRot;
 
 
 	//cada vegetal tera valores para amadurecer e apodrecer diferentes que serao incializados com ripe e rotten Threshold
-	public Vegetable(Point2D position, String name, int ripeThreshold, int rottenThreshold) {
+	public Vegetable(Point2D position, int ripeThreshold, int rottenThreshold) {
 		super(position);
-		this.name = name;
 		this.cyclesToRipe = ripeThreshold;
 		this.cyclesToRot = rottenThreshold;
 		//		this.cycleCount = 0;
 	}
 
 
-	@Override
-	public String getName() {
-		return name;
-	}
-
-
-	@Override
-	public int getLayer() {
-		return 2;
+	
+	
+	public void removeVegetable(){
+		//		if(vegetable.isRipe())  //add Points to farmer
+		Farm.getInstance().removeVegetable(this.getPosition());
 	}
 
 
@@ -72,7 +68,10 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 
 
 
-
+	@Override
+	public int getLayer() {
+		return 2;
+	}
 
 
 }

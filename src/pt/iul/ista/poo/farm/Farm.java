@@ -116,7 +116,7 @@ public class Farm implements Observer {
 	//	 funcao retorna o objecto que devera ser interagido com base no layer
 	//	 exemplo: caso haja Land e Vegetable numa mesma posicao, a funcao ira
 	//	                    retornar o vegetable (pois tem maior layer)
-	private Interactable getObjectByPosition(Point2D newPosition){
+	public Interactable getObjectByPosition(Point2D newPosition){
 		//lista com o objetivo de guardar os objetos interactable com a mesma posicao
 		List<FarmObject> samePositionObjects = new ArrayList<FarmObject>();
 		int higherLayer = 0;
@@ -136,55 +136,54 @@ public class Farm implements Observer {
 	}
 
 
-	private void plantVegetable(Interactable i){
-		Random rnd = new Random();
-		Vegetable veg = null;
-		if(rnd.nextBoolean() == true)
-			veg = new Cabage(((FarmObject)i).getPosition());
-		else veg = new Tomato(((FarmObject)i).getPosition());
-		farmObjects.add(veg);
-		ImageMatrixGUI.getInstance().addImage((ImageTile)veg);
-		ImageMatrixGUI.getInstance().update();
+
+	public void addImageToList(FarmObject farmObj){
+		farmObjects.add(farmObj);
+	}
+	public void removeImageFromList(FarmObject farmObj){
+		farmObjects.remove(farmObj);
 	}
 
-	private void removeVegetable(Interactable i){
+
+	public void removeVegetable(Point2D vegPosition){
 		//		if(vegetable.isRipe())  //add Points to farmer
-		farmObjects.remove(i);
-		ImageMatrixGUI.getInstance().removeImage((ImageTile)i);
+		Interactable veg = getObjectByPosition(vegPosition);
+		farmObjects.remove(veg);
+		ImageMatrixGUI.getInstance().removeImage((ImageTile) veg);
+		unPlow(vegPosition);
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	private void unPlow(Interactable i){
-		Interactable intr = getObjectByPosition(((FarmObject)i).getPosition());
-		if(intr instanceof Land)
-			((Land) intr).setPlowed(false);
+	private void unPlow(Point2D position ){
+		Interactable land = getObjectByPosition(position);
+		((Land) land).setPlowed(false);
 	}
 
-	private void interact(Interactable i){
-		if(i instanceof Land){
-			if(! ((Land) i).isPlowed())
-				i.interact();
-			else 
-				plantVegetable(i);
-		}
-		if(i instanceof Vegetable){
-			if(((Vegetable) i).isRotten() || ((Vegetable)i).isRipe()){
-				removeVegetable(i);
-				unPlow(i);
-			} 
-
-			else i.interact();
-		}
-		if(i instanceof Animal){
-			i.interact();
-		}
-	}
+//	private void interact(Interactable i){
+//		if(i instanceof Land){
+//			if(! ((Land) i).isPlowed())
+//				i.interact();
+//			else 
+//				plantVegetable(i);
+//		}
+//		if(i instanceof Vegetable){
+//			if(((Vegetable) i).isRotten() || ((Vegetable)i).isRipe()){
+//				removeVegetable(i);
+//				unPlow(i);
+//			} 
+//
+//			else i.interact();
+//		}
+//		if(i instanceof Animal){
+//			i.interact();
+//		}
+//	}
 
 
 
 	@Override
 	public void update(Observable gui, Object a) {
-		System.out.println("Update sent " + a);
+ 		System.out.println("Update sent " + a);
 		// TODO
 		if (a instanceof Integer) {
 			//sempre que e clicada uma tecla lança o incrementCycle() definido acima
@@ -199,7 +198,7 @@ public class Farm implements Observer {
 				if(farmer.isInteract()){
 					Point2D newPosition = farmer.getPosition().plus(Direction.directionFor(key).asVector());
 					Interactable i = getObjectByPosition(newPosition);
-					interact(i);
+					i.interact();
 					farmer.setInteract(false);
 				}
 				else farmer.moveTo(Direction.directionFor(key));

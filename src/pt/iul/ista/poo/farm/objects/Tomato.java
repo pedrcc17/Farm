@@ -1,5 +1,8 @@
 package pt.iul.ista.poo.farm.objects;
 
+import pt.iul.ista.poo.farm.Farm;
+import pt.iul.ista.poo.gui.ImageMatrixGUI;
+import pt.iul.ista.poo.gui.ImageTile;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Tomato extends Vegetable {
@@ -8,7 +11,7 @@ public class Tomato extends Vegetable {
 	private int cyclesAfterTakenCare;
 
 	public Tomato(Point2D position) {
-		super(position, "planted", 15, 25);
+		super(position, 15, 25);
 		this.cyclesAfterTakenCare = 0;
 	}
 
@@ -27,9 +30,13 @@ public class Tomato extends Vegetable {
 	//caso nao esteja podre, ao interagir, mete o contador da ultima vez que foi cuidado a 0
 	@Override
 	public void interact(){
-		if(! isRotten())
+		if(isRotten() || isRipe())
+			removeVegetable();
+		else
 			cyclesAfterTakenCare = 0;
 	}
+	
+	
 
 	@Override
 	public String getName(){
