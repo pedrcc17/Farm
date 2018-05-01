@@ -187,13 +187,13 @@ public class Farm implements Observer {
 		// TODO
 		if (a instanceof Integer) {
 			//sempre que e clicada uma tecla lança o incrementCycle() definido acima
-			incrementCycle();
 			//if clicada uma tecla de direcao -> farmer move-se
 			//if clicada tecla de espaço -> ativa a interacao
 			//quando interacao tiver ativada, escolhe-se a direcao que se quer 
 			//                   interagir(tecla direcao) -> farmer interage com land e nao se move
 			int key = (Integer) a ;
 			if (Direction.isDirection(key)) {
+				incrementCycle();
 				System.out.println("Update is a Direction " + Direction.directionFor(key));
 				if(farmer.isInteract()){
 					Point2D newPosition = farmer.getPosition().plus(Direction.directionFor(key).asVector());
