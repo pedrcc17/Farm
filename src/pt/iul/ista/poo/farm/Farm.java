@@ -40,6 +40,7 @@ public class Farm implements Observer {
 	private int max_y;
 
 	private List<FarmObject> farmObjects;
+	private List<Vegetable> vegetablesToRemove;
 
 	private Farm(int max_x, int max_y) {
 		if (max_x < 5 || max_y < 5)
@@ -51,6 +52,7 @@ public class Farm implements Observer {
 		INSTANCE = this;
 
 		farmObjects = new ArrayList<FarmObject>();
+		vegetablesToRemove = new ArrayList<Vegetable>();
 
 
 		ImageMatrixGUI.setSize(max_x, max_y);
@@ -111,7 +113,9 @@ public class Farm implements Observer {
 			if(f instanceof Updatable)
 				((Updatable) f).incrementCycle();
 		}
+		farmObjects.removeAll(vegetablesToRemove);
 	}
+
 
 	//	 funcao retorna o objecto que devera ser interagido com base no layer
 	//	 exemplo: caso haja Land e Vegetable numa mesma posicao, a funcao ira
@@ -135,6 +139,33 @@ public class Farm implements Observer {
 		return null;
 	}
 
+	//    diz-nos se existe um vegetal na posicao dada (util para saber se a ovelha pode comer um vegetal na sua posicao)
+	public boolean isVegetableInGivenPosition(Point2D position){
+		for(FarmObject f : farmObjects){
+			if(f.getPosition().equals(position)){
+				if((FarmObject)f instanceof Vegetable) return true;
+			}
+		}
+		return false;
+	}
+
+	public Vegetable vegetableInGivenPosition(Point2D position){
+		for(FarmObject f : farmObjects){
+			if(f.getPosition().equals(position)){
+				if((FarmObject)f instanceof Vegetable) return (Vegetable) f;
+			}
+		}
+		return null;
+	}
+
+	public Land landInGivenPosition(Point2D position){
+		for(FarmObject f : farmObjects){
+			if(f.getPosition().equals(position)){
+				if((FarmObject)f instanceof Land) return (Land) f;
+			}
+		}
+		return null;
+	}
 
 
 	public void addImageToList(FarmObject farmObj){
@@ -148,42 +179,50 @@ public class Farm implements Observer {
 	public void removeVegetable(Point2D vegPosition){
 		//		if(vegetable.isRipe())  //add Points to farmer
 		Interactable veg = getObjectByPosition(vegPosition);
-		farmObjects.remove(veg);
+		//		vegetablesToRemove.add((Vegetable)veg);
+		if(veg instanceof Vegetable){
+			vegetablesToRemove.add((Vegetable) veg);
+		}
+		if(veg instanceof Animal){
+			veg = vegetableInGivenPosition(vegPosition);
+			vegetablesToRemove.add((Vegetable) veg);
+		}
+
 		ImageMatrixGUI.getInstance().removeImage((ImageTile) veg);
 		unPlow(vegPosition);
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	private void unPlow(Point2D position ){
-		Interactable land = getObjectByPosition(position);
-		((Land) land).setPlowed(false);
+	private void unPlow(Point2D position){
+		Land land = landInGivenPosition(position);
+		land.setPlowed(false);
 	}
 
-//	private void interact(Interactable i){
-//		if(i instanceof Land){
-//			if(! ((Land) i).isPlowed())
-//				i.interact();
-//			else 
-//				plantVegetable(i);
-//		}
-//		if(i instanceof Vegetable){
-//			if(((Vegetable) i).isRotten() || ((Vegetable)i).isRipe()){
-//				removeVegetable(i);
-//				unPlow(i);
-//			} 
-//
-//			else i.interact();
-//		}
-//		if(i instanceof Animal){
-//			i.interact();
-//		}
-//	}
+	//	private void interact(Interactable i){
+	//		if(i instanceof Land){
+	//			if(! ((Land) i).isPlowed())
+	//				i.interact();
+	//			else 
+	//				plantVegetable(i);
+	//		}
+	//		if(i instanceof Vegetable){
+	//			if(((Vegetable) i).isRotten() || ((Vegetable)i).isRipe()){
+	//				removeVegetable(i);
+	//				unPlow(i);
+	//			} 
+	//
+	//			else i.interact();
+	//		}
+	//		if(i instanceof Animal){
+	//			i.interact();
+	//		}
+	//	}
 
 
 
 	@Override
 	public void update(Observable gui, Object a) {
- 		System.out.println("Update sent " + a);
+		System.out.println("Update sent " + a);
 		// TODO
 		if (a instanceof Integer) {
 			//sempre que e clicada uma tecla lança o incrementCycle() definido acima

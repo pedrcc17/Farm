@@ -41,7 +41,7 @@ public class Sheep extends Animal {
 
 	//TODO nao funciona
 	private void eatVegetable(){
-		if(Farm.getInstance().getObjectByPosition(this.getPosition()) instanceof Vegetable)
+		if(Farm.getInstance().isVegetableInGivenPosition(this.getPosition()))
 			Farm.getInstance().removeVegetable(getPosition());
 	}
 

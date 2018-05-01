@@ -15,7 +15,6 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 		super(position);
 		this.cyclesToRipe = ripeThreshold;
 		this.cyclesToRot = rottenThreshold;
-		//		this.cycleCount = 0;
 	}
 
 

@@ -23,11 +23,11 @@ public class Land extends FarmObject implements Interactable  {
 	@Override
 	public void interact(){
 		if(!rocky) {
-		if(plowed == false) plowed = true;
-		else plantVegetable();
+			if(plowed == false) plowed = true;
+			else plantVegetable();
 		}
 	}
-	
+
 	private void plantVegetable(){
 		Random rnd = new Random();
 		Vegetable veg = null;
@@ -38,7 +38,7 @@ public class Land extends FarmObject implements Interactable  {
 		ImageMatrixGUI.getInstance().addImage((ImageTile)veg);
 		ImageMatrixGUI.getInstance().update();
 	}
-	
+
 
 	private boolean rockRandomizer(){
 		Random rnd = new Random();
@@ -66,7 +66,7 @@ public class Land extends FarmObject implements Interactable  {
 
 	@Override
 	public String getName(){
-//		if(rocky) return "rocky";
+		if(rocky) return "rock";
 		if(plowed == false) return "land";
 		else return "plowed";
 	}
