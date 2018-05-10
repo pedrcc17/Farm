@@ -46,7 +46,7 @@ public class Egg extends FarmObject implements Updatable, Interactable, Scorable
 		Farm.getInstance().addImageToList(newChicken);
 	}
 
-	//TODO usar esta funcao ?  pode-se fazer o egg extender o animal ?
+	
 	private Point2D chickenSpawnPosition(){
 		Random rnd = new Random();
 		int rand = rnd.nextInt(4);
