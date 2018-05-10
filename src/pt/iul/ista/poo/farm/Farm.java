@@ -6,8 +6,11 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
+import javax.swing.text.Position;
+
 import pt.iul.ista.poo.farm.objects.Animal;
 import pt.iul.ista.poo.farm.objects.Cabage;
+import pt.iul.ista.poo.farm.objects.Chicken;
 import pt.iul.ista.poo.farm.objects.FarmObject;
 import pt.iul.ista.poo.farm.objects.Farmer;
 import pt.iul.ista.poo.farm.objects.Interactable;
@@ -31,16 +34,16 @@ public class Farm implements Observer {
 	private static final int MIN_Y = 5;
 
 	private static Farm INSTANCE  = null;
+	
+	private int points;
 
 	private Farmer farmer;
-	private Sheep sheep;
 
 
 	private int max_x;
 	private int max_y;
 
 	private List<FarmObject> farmObjects;
-	private List<Vegetable> vegetablesToRemove;
 
 	private Farm(int max_x, int max_y) {
 		if (max_x < 5 || max_y < 5)
@@ -50,9 +53,11 @@ public class Farm implements Observer {
 		this.max_y = max_y;
 
 		INSTANCE = this;
+		
+		this.points = 0 ;
 
 		farmObjects = new ArrayList<FarmObject>();
-		vegetablesToRemove = new ArrayList<Vegetable>();
+//		objectToRemove = new ArrayList<FarmObject>();
 
 
 		ImageMatrixGUI.setSize(max_x, max_y);
@@ -68,8 +73,8 @@ public class Farm implements Observer {
 
 	private Point2D randomPosition(){
 		Random rnd = new Random();
-		Point2D randomP = new Point2D(rnd.nextInt(max_x),rnd.nextInt(max_y));
-		return randomP;
+		Point2D randomPos = new Point2D(rnd.nextInt(max_x),rnd.nextInt(max_y));
+		return randomPos;
 	}
 
 
@@ -81,8 +86,17 @@ public class Farm implements Observer {
 		farmer = new Farmer (farmerInitialPosition);
 		farmObjects.add(farmer);
 
-		sheep = new Sheep(randomPosition());
-		farmObjects.add(sheep);
+//		sheep = new Sheep(randomPosition());
+//		farmObjects.add(sheep);
+		Sheep sheepOne = new Sheep(randomPosition());
+		Sheep sheepTwo = new Sheep(randomPosition());
+		farmObjects.add(sheepOne);
+		farmObjects.add(sheepTwo);
+		
+		Chicken chickenOne = new Chicken(randomPosition());
+		Chicken chickenTwo = new Chicken(randomPosition());
+		farmObjects.add(chickenOne);
+		farmObjects.add(chickenTwo);
 
 		// Gravar os objectos Land na list de farmObjects
 		for ( int x = 0; x < max_x; x++){
@@ -94,8 +108,7 @@ public class Farm implements Observer {
 			}
 		}
 
-		images.add(farmer);
-		images.add(sheep);
+		images.addAll(farmObjects);
 		ImageMatrixGUI.getInstance().addImages(images);
 		ImageMatrixGUI.getInstance().update();
 	}
@@ -109,12 +122,20 @@ public class Farm implements Observer {
 
 	//incrementa os ciclos dos objectos que dependem dos ciclos de jogo
 	private void incrementCycle(){
-		for(FarmObject f : farmObjects){
+		// iterateFarmObjects para uma remocao segura
+		List<FarmObject> iterateFarmObjects = new ArrayList<FarmObject>(farmObjects);
+		for(FarmObject f : iterateFarmObjects){
 			if(f instanceof Updatable)
 				((Updatable) f).incrementCycle();
 		}
-		farmObjects.removeAll(vegetablesToRemove);
 	}
+	
+	//duvidas
+	// incrementcycle, lista iterate e valida ?
+	//interface getPoints ? ou definir getpoints em cada interactable ?
+	//metodo abaixo funciona para tudo ? exemplo: ovelha comer o vegetal que esta na sua posicao
+	//como fazer para ovo, animal e farmer nao estarem na mesma posicao
+	
 
 
 	//	 funcao retorna o objecto que devera ser interagido com base no layer
@@ -149,6 +170,7 @@ public class Farm implements Observer {
 		return false;
 	}
 
+
 	public Vegetable vegetableInGivenPosition(Point2D position){
 		for(FarmObject f : farmObjects){
 			if(f.getPosition().equals(position)){
@@ -157,6 +179,7 @@ public class Farm implements Observer {
 		}
 		return null;
 	}
+
 
 	public Land landInGivenPosition(Point2D position){
 		for(FarmObject f : farmObjects){
@@ -170,24 +193,31 @@ public class Farm implements Observer {
 
 	public void addImageToList(FarmObject farmObj){
 		farmObjects.add(farmObj);
+		ImageMatrixGUI.getInstance().addImage(farmObj);
+		ImageMatrixGUI.getInstance().update();
 	}
 	public void removeImageFromList(FarmObject farmObj){
 		farmObjects.remove(farmObj);
+		ImageMatrixGUI.getInstance().removeImage(farmObj);
+		ImageMatrixGUI.getInstance().update();
 	}
 
+	public void addPoints(int numberOfPoints){
+		points = points + numberOfPoints;
+	}
+	
+	public void removeObject(Point2D objectPosition){
+		Interactable object = getObjectByPosition(objectPosition);
+		farmObjects.remove(object);
+		ImageMatrixGUI.getInstance().removeImage((ImageTile)object);
+		ImageMatrixGUI.getInstance().update();			
+		}
+		
 
 	public void removeVegetable(Point2D vegPosition){
 		//		if(vegetable.isRipe())  //add Points to farmer
-		Interactable veg = getObjectByPosition(vegPosition);
-		//		vegetablesToRemove.add((Vegetable)veg);
-		if(veg instanceof Vegetable){
-			vegetablesToRemove.add((Vegetable) veg);
-		}
-		if(veg instanceof Animal){
-			veg = vegetableInGivenPosition(vegPosition);
-			vegetablesToRemove.add((Vegetable) veg);
-		}
-
+		Vegetable veg = vegetableInGivenPosition(vegPosition);
+		farmObjects.remove((Vegetable) veg);
 		ImageMatrixGUI.getInstance().removeImage((ImageTile) veg);
 		unPlow(vegPosition);
 		ImageMatrixGUI.getInstance().update();
@@ -197,26 +227,6 @@ public class Farm implements Observer {
 		Land land = landInGivenPosition(position);
 		land.setPlowed(false);
 	}
-
-	//	private void interact(Interactable i){
-	//		if(i instanceof Land){
-	//			if(! ((Land) i).isPlowed())
-	//				i.interact();
-	//			else 
-	//				plantVegetable(i);
-	//		}
-	//		if(i instanceof Vegetable){
-	//			if(((Vegetable) i).isRotten() || ((Vegetable)i).isRipe()){
-	//				removeVegetable(i);
-	//				unPlow(i);
-	//			} 
-	//
-	//			else i.interact();
-	//		}
-	//		if(i instanceof Animal){
-	//			i.interact();
-	//		}
-	//	}
 
 
 
@@ -245,7 +255,7 @@ public class Farm implements Observer {
 				farmer.setInteract(true);
 			}
 		}
-		ImageMatrixGUI.getInstance().setStatusMessage("Points: ");
+		ImageMatrixGUI.getInstance().setStatusMessage("Points: " + points);
 		ImageMatrixGUI.getInstance().update();
 	}
 

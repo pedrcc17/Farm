@@ -37,6 +37,10 @@ public class Cabage extends Vegetable {
 		return "planted";
 	}
 	
+	@Override
+	public int getPoints(){
+		return 2;
+	}
 	
 	
 	

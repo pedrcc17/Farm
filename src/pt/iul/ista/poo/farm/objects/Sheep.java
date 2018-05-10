@@ -28,53 +28,38 @@ public class Sheep extends Animal {
 	public void incrementCycle(){
 		cyclesSinceEaten++;
 		if(cyclesSinceEaten > 10 && cyclesSinceEaten < 20){
-			startMoving();
-			eatVegetable();
+			moveAndEat();
 		}
 		if(cyclesSinceEaten > 20) 
 			starving = true;
+
+		if(cyclesSinceEaten < 10)
+			addPoints();
 	}
+
+
+	@Override   
+	public boolean canEatVegetable(Point2D newPosition){
+		if(Farm.getInstance().isVegetableInGivenPosition(newPosition)) 
+			return true;
+		return false;
+	}
+
+
 
 	public int getCyclesSinceEaten() {
 		return cyclesSinceEaten;
 	}
 
-	//TODO nao funciona
-	private void eatVegetable(){
-		if(Farm.getInstance().isVegetableInGivenPosition(this.getPosition()))
-			Farm.getInstance().removeVegetable(getPosition());
-	}
-
-	private void startMoving(){
-		Random rnd = new Random();
-		int rand = rnd.nextInt(4);
-		Point2D newPosition = null;
-		switch (rand) {
-		case 0:
-			newPosition = getPosition().plus((Direction.UP).asVector());
-			break;
-		case 1:
-			newPosition = getPosition().plus((Direction.DOWN).asVector());
-			break;
-		case 2: 
-			newPosition = getPosition().plus((Direction.RIGHT).asVector());
-			break;
-		case 3:
-			newPosition = getPosition().plus((Direction.LEFT).asVector());
-			break;
-		}
-		if (ImageMatrixGUI.getInstance().isWithinBounds(newPosition) == false) {
-			return;
-		}
-		setPosition(newPosition);		
-	}
-
-
-
 	public boolean isStarving() {
 		return starving;
 	}
 
+
+	@Override
+	public int getPoints(){
+		return 1;
+	}
 
 	@Override
 	public String getName(){

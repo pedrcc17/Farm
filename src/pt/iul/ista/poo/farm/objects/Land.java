@@ -35,8 +35,6 @@ public class Land extends FarmObject implements Interactable  {
 			veg = new Cabage(this.getPosition());
 		else veg = new Tomato(this.getPosition());
 		Farm.getInstance().addImageToList(veg);
-		ImageMatrixGUI.getInstance().addImage((ImageTile)veg);
-		ImageMatrixGUI.getInstance().update();
 	}
 
 

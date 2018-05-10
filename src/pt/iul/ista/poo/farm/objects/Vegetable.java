@@ -2,7 +2,7 @@ package pt.iul.ista.poo.farm.objects;
 import pt.iul.ista.poo.farm.Farm;
 import pt.iul.ista.poo.utils.Point2D;
 
-public abstract class Vegetable extends FarmObject implements Interactable, Updatable {
+public abstract class Vegetable extends FarmObject implements Interactable, Updatable, Scorable {
 
 
 
@@ -21,13 +21,16 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 	
 	
 	public void removeVegetable(){
-		//		if(vegetable.isRipe())  //add Points to farmer
 		Farm.getInstance().removeVegetable(this.getPosition());
+		if(! isRotten())
+			Farm.getInstance().addPoints(getPoints());
 	}
 
 
 	
 
+	public abstract int getPoints();
+	
 
 
 	//ao incrementar ciclos, serao usados dois contadores, um para o amadurecimento e outro para apodrecimento (ripen e rot)

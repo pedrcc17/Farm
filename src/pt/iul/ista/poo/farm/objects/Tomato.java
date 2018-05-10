@@ -19,9 +19,9 @@ public class Tomato extends Vegetable {
 	@Override
 	public void incrementCycle() {
 		cyclesAfterTakenCare++;
-		if(cyclesAfterTakenCare < 10){
+		if(cyclesAfterTakenCare < 10)
 			super.ripen(1);
-		}
+
 		super.rot();
 	}
 
@@ -35,8 +35,8 @@ public class Tomato extends Vegetable {
 		else
 			cyclesAfterTakenCare = 0;
 	}
-	
-	
+
+
 
 	@Override
 	public String getName(){
@@ -44,6 +44,11 @@ public class Tomato extends Vegetable {
 		if(isRipe()) return "tomato";
 		if(getCyclesToRipe()<10) return "small_tomato";
 		return "planted";
+	}
+
+	@Override
+	public int getPoints(){
+		return 3;
 	}
 
 
