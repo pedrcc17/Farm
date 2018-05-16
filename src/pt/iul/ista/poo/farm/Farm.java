@@ -9,7 +9,7 @@ import java.util.Random;
 import javax.swing.text.Position;
 
 import pt.iul.ista.poo.farm.objects.Animal;
-import pt.iul.ista.poo.farm.objects.Cabage;
+import pt.iul.ista.poo.farm.objects.Cabbage;
 import pt.iul.ista.poo.farm.objects.Chicken;
 import pt.iul.ista.poo.farm.objects.FarmObject;
 import pt.iul.ista.poo.farm.objects.Farmer;
@@ -107,7 +107,6 @@ public class Farm implements Observer {
 				farmObjects.add(land);
 			}
 		}
-
 		images.addAll(farmObjects);
 		ImageMatrixGUI.getInstance().addImages(images);
 		ImageMatrixGUI.getInstance().update();
@@ -130,15 +129,7 @@ public class Farm implements Observer {
 		}
 	}
 	
-	//duvidas
-	// incrementcycle, lista iterate e valida ?
-	//interface getPoints ? ou definir getpoints em cada interactable ?
-	//metodo abaixo funciona para tudo ? exemplo: ovelha comer o vegetal que esta na sua posicao
-	//como fazer para ovo, animal e farmer nao estarem na mesma posicao
-	
-
-
-	//	 funcao retorna o objecto que devera ser interagido com base no layer
+	//	 metodo que retorna o objecto que devera ser interagido com base no layer
 	//	 exemplo: caso haja Land e Vegetable numa mesma posicao, a funcao ira
 	//	                    retornar o vegetable (pois tem maior layer)
 	public Interactable getObjectByPosition(Point2D newPosition){
@@ -159,36 +150,19 @@ public class Farm implements Observer {
 		}
 		return null;
 	}
-
-	//    diz-nos se existe um vegetal na posicao dada (util para saber se a ovelha pode comer um vegetal na sua posicao)
-	public boolean isVegetableInGivenPosition(Point2D position){
-		for(FarmObject f : farmObjects){
-			if(f.getPosition().equals(position)){
-				if((FarmObject)f instanceof Vegetable) return true;
-			}
-		}
+	
+	//TODO
+	//ovelha ainda passa por cima de farmer
+	public boolean canMove(Point2D pos){
+		Interactable i = getObjectByPosition(pos);
+		if(! ImageMatrixGUI.getInstance().isWithinBounds(pos))
+			return false;
+		if( i instanceof Land )
+			return true;
+		if( i instanceof Vegetable )
+			return true;
 		return false;
-	}
-
-
-	public Vegetable vegetableInGivenPosition(Point2D position){
-		for(FarmObject f : farmObjects){
-			if(f.getPosition().equals(position)){
-				if((FarmObject)f instanceof Vegetable) return (Vegetable) f;
 			}
-		}
-		return null;
-	}
-
-
-	public Land landInGivenPosition(Point2D position){
-		for(FarmObject f : farmObjects){
-			if(f.getPosition().equals(position)){
-				if((FarmObject)f instanceof Land) return (Land) f;
-			}
-		}
-		return null;
-	}
 
 
 	public void addImageToList(FarmObject farmObj){
@@ -196,11 +170,13 @@ public class Farm implements Observer {
 		ImageMatrixGUI.getInstance().addImage(farmObj);
 		ImageMatrixGUI.getInstance().update();
 	}
+	
 	public void removeImageFromList(FarmObject farmObj){
 		farmObjects.remove(farmObj);
 		ImageMatrixGUI.getInstance().removeImage(farmObj);
 		ImageMatrixGUI.getInstance().update();
 	}
+	
 
 	public void addPoints(int numberOfPoints){
 		points = points + numberOfPoints;
@@ -215,16 +191,15 @@ public class Farm implements Observer {
 		
 
 	public void removeVegetable(Point2D vegPosition){
-		//		if(vegetable.isRipe())  //add Points to farmer
-		Vegetable veg = vegetableInGivenPosition(vegPosition);
-		farmObjects.remove((Vegetable) veg);
+		Vegetable veg = (Vegetable) getObjectByPosition(vegPosition);
+		farmObjects.remove(veg);
 		ImageMatrixGUI.getInstance().removeImage((ImageTile) veg);
 		unPlow(vegPosition);
 		ImageMatrixGUI.getInstance().update();
 	}
 
 	private void unPlow(Point2D position){
-		Land land = landInGivenPosition(position);
+		Land land = (Land) getObjectByPosition(position);
 		land.setPlowed(false);
 	}
 
@@ -242,6 +217,9 @@ public class Farm implements Observer {
 			//                   interagir(tecla direcao) -> farmer interage com land e nao se move
 			int key = (Integer) a ;
 			if (Direction.isDirection(key)) {
+				//TODO
+//				if(! ImageMatrixGUI.getInstance().isWithinBounds(Direction.isDirection(key)))
+//						return;
 				incrementCycle();
 				System.out.println("Update is a Direction " + Direction.directionFor(key));
 				if(farmer.isInteract()){

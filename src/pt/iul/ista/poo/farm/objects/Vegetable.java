@@ -21,16 +21,10 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 	
 	
 	public void removeVegetable(){
-		Farm.getInstance().removeVegetable(this.getPosition());
+		Farm.getInstance().removeVegetable(getPosition());
 		if(! isRotten())
 			Farm.getInstance().addPoints(getPoints());
 	}
-
-
-	
-
-	public abstract int getPoints();
-	
 
 
 	//ao incrementar ciclos, serao usados dois contadores, um para o amadurecimento e outro para apodrecimento (ripen e rot)
@@ -46,7 +40,7 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 		return false;
 	}
 
-	//diminui os ciclos que faltam para amadrecer
+	//diminui os ciclos que faltam para amadurecer
 	public void ripen(int n){
 		cyclesToRipe -= n;
 	}
@@ -57,23 +51,12 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 		return false;
 	}
 
-
-	public int getCyclesToRot() {
-		return cyclesToRot;
-	}
-
-
-	public int getCyclesToRipe() {
-		return cyclesToRipe;
-	}
-
-
-
-
+	
 	@Override
 	public int getLayer() {
 		return 2;
 	}
 
+	
 
 }

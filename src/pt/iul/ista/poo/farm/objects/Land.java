@@ -32,7 +32,7 @@ public class Land extends FarmObject implements Interactable  {
 		Random rnd = new Random();
 		Vegetable veg = null;
 		if(rnd.nextBoolean() == true)
-			veg = new Cabage(this.getPosition());
+			veg = new Cabbage(this.getPosition());
 		else veg = new Tomato(this.getPosition());
 		Farm.getInstance().addImageToList(veg);
 	}
@@ -45,31 +45,6 @@ public class Land extends FarmObject implements Interactable  {
 		return false;
 	}
 
-	//		if(!(vegetable.isRotten() || vegetable.isRipe()))
-	//		vegetable.interact();
-	//		else removeVegetable();
-
-
-	//	}
-
-	//	private void plantVegetable(){
-	//		Random rnd = new Random();
-	//		if(rnd.nextBoolean() == true)
-	//			vegetable = new Cabage(getPosition());
-	//		else vegetable = new Tomato(getPosition());
-	//		ImageMatrixGUI.getInstance().addImage(vegetable);
-	//		ImageMatrixGUI.getInstance().update();
-	//	}
-
-
-	@Override
-	public String getName(){
-		if(rocky) return "rock";
-		if(plowed == false) return "land";
-		else return "plowed";
-	}
-
-
 
 	public boolean isPlowed() {
 		return plowed;
@@ -79,11 +54,18 @@ public class Land extends FarmObject implements Interactable  {
 		this.plowed = b;
 	}
 
+	
+	@Override
+	public String getName(){
+		if(rocky) return "rock";
+		if(plowed == false) return "land";
+		else return "plowed";
+	}
+	
 	@Override
 	public int getLayer(){
 		return 1;
 	}
-
 
 
 

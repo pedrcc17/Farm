@@ -2,9 +2,9 @@ package pt.iul.ista.poo.farm.objects;
 
 import pt.iul.ista.poo.utils.Point2D;
 
-public class Cabage extends Vegetable {
+public class Cabbage extends Vegetable {
 
-	public Cabage(Point2D position) {
+	public Cabbage(Point2D position) {
 		super(position, 10, 30);
 	}
 
@@ -31,10 +31,9 @@ public class Cabage extends Vegetable {
 	
 	@Override
 	public String getName(){
-		if(isRotten()) return "bad_cabage";
-		if(isRipe()) return "cabage";
-		if(getCyclesToRipe()<7) return "small_cabage";
-		return "planted";
+		if(isRotten()) return "bad_cabbage";
+		if(isRipe()) return "cabbage";
+		return "small_cabbage";
 	}
 	
 	@Override

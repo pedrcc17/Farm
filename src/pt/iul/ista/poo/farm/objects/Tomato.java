@@ -1,15 +1,27 @@
 package pt.iul.ista.poo.farm.objects;
 
-import pt.iul.ista.poo.farm.Farm;
-import pt.iul.ista.poo.gui.ImageMatrixGUI;
-import pt.iul.ista.poo.gui.ImageTile;
 import pt.iul.ista.poo.utils.Point2D;
+
+/**
+ * @author TomásFerreira & PedroCosta
+ * 
+ *    Classe que extende Vegetable
+ *
+ *
+ */
+
 
 public class Tomato extends Vegetable {
 
 	//conta o numero de ciclos que passaram desde a ultima vez que foi cuidado
 	private int cyclesAfterTakenCare;
 
+	/**
+	 * 
+	 * @param position - posicao do tomate 
+	 * 
+	 * 
+	 */
 	public Tomato(Point2D position) {
 		super(position, 15, 25);
 		this.cyclesAfterTakenCare = 0;
@@ -21,7 +33,6 @@ public class Tomato extends Vegetable {
 		cyclesAfterTakenCare++;
 		if(cyclesAfterTakenCare < 10)
 			super.ripen(1);
-
 		super.rot();
 	}
 
@@ -42,8 +53,7 @@ public class Tomato extends Vegetable {
 	public String getName(){
 		if(isRotten()) return "bad_tomato";
 		if(isRipe()) return "tomato";
-		if(getCyclesToRipe()<10) return "small_tomato";
-		return "planted";
+		return "small_tomato";
 	}
 
 	@Override

@@ -1,10 +1,6 @@
 package pt.iul.ista.poo.farm.objects;
 
-import java.util.Random;
-
 import pt.iul.ista.poo.farm.Farm;
-import pt.iul.ista.poo.gui.ImageMatrixGUI;
-import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Sheep extends Animal {
@@ -27,32 +23,20 @@ public class Sheep extends Animal {
 	@Override
 	public void incrementCycle(){
 		cyclesSinceEaten++;
-		if(cyclesSinceEaten > 10 && cyclesSinceEaten < 20){
-			moveAndEat();
-		}
-		if(cyclesSinceEaten > 20) 
-			starving = true;
-
 		if(cyclesSinceEaten < 10)
 			addPoints();
+		if(cyclesSinceEaten > 10 && cyclesSinceEaten < 20)
+			moveAndEat();
+		if(cyclesSinceEaten > 20) 
+			starving = true;
 	}
 
 
 	@Override   
 	public boolean canEatVegetable(Point2D newPosition){
-		if(Farm.getInstance().isVegetableInGivenPosition(newPosition)) 
+		if(Farm.getInstance().getObjectByPosition(newPosition) instanceof Vegetable)
 			return true;
 		return false;
-	}
-
-
-
-	public int getCyclesSinceEaten() {
-		return cyclesSinceEaten;
-	}
-
-	public boolean isStarving() {
-		return starving;
 	}
 
 

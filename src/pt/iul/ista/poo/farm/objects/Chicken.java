@@ -17,7 +17,6 @@ public class Chicken extends Animal {
 
 	@Override
 	public void interact(){
-		addPoints();
 		removeChicken();
 	}
 
@@ -25,19 +24,16 @@ public class Chicken extends Animal {
 	@Override
 	public void incrementCycle(){
 		cycleCount++;
-		if(cycleCount % 2 == 0){
+		if(cycleCount % 2 == 0)
 			moveAndEat();
-		}
-		if(cycleCount % 10 == 0){
+		if(cycleCount % 10 == 0)
 			layEgg();
-		}
 	}
 
 	@Override
 	public boolean canEatVegetable(Point2D newPosition){
-		if(Farm.getInstance().vegetableInGivenPosition(newPosition) instanceof Tomato)
+		if(Farm.getInstance().getObjectByPosition(newPosition) instanceof Tomato)
 			return true;
-
 		return false;
 	}
 
@@ -49,6 +45,7 @@ public class Chicken extends Animal {
 
 	private void removeChicken(){
 		Farm.getInstance().removeObject(getPosition());
+		addPoints();
 	}
 
 
