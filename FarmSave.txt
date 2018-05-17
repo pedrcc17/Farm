@@ -1,0 +1,8 @@
+5 7
+10
+Land 0;1 plowed
+Land 0;2 rocky
+Sheep 0;1 5 Starving
+Sheep 1;4 4 Starving
+Tomato 3;4 5 8 9
+Cabbage 4;2 4 5

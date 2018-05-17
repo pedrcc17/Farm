@@ -7,11 +7,31 @@ public class Sheep extends Animal {
 
 	private int cyclesSinceEaten;
 	private boolean starving;
-
+	
 	public Sheep(Point2D p){
 		super(p);
 		cyclesSinceEaten = 0;
 	}
+
+	public int getCyclesSinceEaten() {
+		return cyclesSinceEaten;
+	}
+
+
+	public void setCyclesSinceEaten(int cyclesSinceEaten) {
+		this.cyclesSinceEaten = cyclesSinceEaten;
+	}
+
+
+	public boolean isStarving() {
+		return starving;
+	}
+
+
+	public void setStarving(boolean starving) {
+		this.starving = starving;
+	}
+
 
 
 	@Override

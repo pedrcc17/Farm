@@ -11,9 +11,14 @@ public class Egg extends FarmObject implements Interactable, Updatable, Scorable
 
 	private int cycleCount;
 
+
 	public Egg(Point2D p){
 		super(p);
 		cycleCount = 0;
+	}
+	
+	public void setCycleCount(int cycleCount) {
+		this.cycleCount = cycleCount;
 	}
 
 	@Override

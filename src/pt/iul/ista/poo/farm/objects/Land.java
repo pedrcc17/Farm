@@ -53,7 +53,17 @@ public class Land extends FarmObject implements Interactable  {
 	public void setPlowed(boolean b){
 		this.plowed = b;
 	}
+	
+	public void setRocky(boolean b){
+		this.rocky = b;
 
+	}
+
+	public void addRock( Land a){
+	
+	
+	
+	}
 	
 	@Override
 	public String getName(){

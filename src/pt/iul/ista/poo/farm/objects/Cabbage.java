@@ -4,10 +4,15 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Cabbage extends Vegetable {
 
+	public int Cycle;
+	
+	public void setCycle(int cycle) {
+		Cycle = cycle;
+	}
+
 	public Cabbage(Point2D position) {
 		super(position, 10, 30);
 	}
-
 
 	@Override
 	public void incrementCycle(){

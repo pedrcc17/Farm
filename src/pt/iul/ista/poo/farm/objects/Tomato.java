@@ -14,7 +14,7 @@ import pt.iul.ista.poo.utils.Point2D;
 public class Tomato extends Vegetable {
 
 	//conta o numero de ciclos que passaram desde a ultima vez que foi cuidado
-	private int cyclesAfterTakenCare;
+	public int cyclesAfterTakenCare;
 
 	/**
 	 * 
@@ -25,6 +25,14 @@ public class Tomato extends Vegetable {
 	public Tomato(Point2D position) {
 		super(position, 15, 25);
 		this.cyclesAfterTakenCare = 0;
+	}
+
+	public int getCyclesAfterTakenCare() {
+		return cyclesAfterTakenCare;
+	}
+
+	public void setCyclesAfterTakenCare(int cyclesAfterTakenCare) {
+		this.cyclesAfterTakenCare = cyclesAfterTakenCare;
 	}
 
 	//apenas altera o contador para amadurecer caso tenha sido interagido à menos de 10 ciclos
