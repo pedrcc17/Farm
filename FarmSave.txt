@@ -1,0 +1,45 @@
+5 7
+19
+Farmer 2;0 false
+Sheep 1;0 0 false 
+Sheep 3;4 27 true 
+Chicken 2;627
+Chicken 0;227
+Land 0;0 false true
+Land 0;1 false false
+Land 0;2 false false
+Land 0;3 false false
+Land 0;4 false false
+Land 0;5 false false
+Land 0;6 false false
+Land 1;0 false false
+Land 1;1 false false
+Land 1;2 false false
+Land 1;3 false false
+Land 1;4 false false
+Land 1;5 true false
+Land 1;6 false false
+Land 2;0 false false
+Land 2;1 false false
+Land 2;2 false false
+Land 2;3 false false
+Land 2;4 false false
+Land 2;5 false false
+Land 2;6 false false
+Land 3;0 false false
+Land 3;1 false false
+Land 3;2 false true
+Land 3;3 false false
+Land 3;4 false false
+Land 3;5 false false
+Land 3;6 false false
+Land 4;0 false false
+Land 4;1 false false
+Land 4;2 false false
+Land 4;3 false false
+Land 4;4 false false
+Land 4;5 false false
+Land 4;6 false false
+Egg 4;6 17
+Egg 2;4 7
+Egg 1;2 7

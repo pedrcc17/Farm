@@ -5,7 +5,7 @@ import pt.iul.ista.poo.utils.Point2D;
 public abstract class FarmObject implements ImageTile {
 
 	private Point2D position;
-
+	
 	public FarmObject(Point2D p) {
 		position = p;
 	}
@@ -14,6 +14,9 @@ public abstract class FarmObject implements ImageTile {
 		return position = a ;
 	}
 	
+	public void setCycle( FarmObject a, int cycles){
+	
+	}
 	
 	@Override
 	public String getName() {
