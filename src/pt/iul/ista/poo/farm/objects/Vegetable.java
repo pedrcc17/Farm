@@ -20,6 +20,11 @@ public abstract class Vegetable extends FarmObject implements Interactable, Upda
 		return cyclesToRipe;
 	}
 
+	@Override
+	public String toString() {
+		return "" + cyclesToRipe + "" + cyclesToRot;
+	}
+
 	public void setCyclesToRipe(int cyclesToRipe) {
 		this.cyclesToRipe = cyclesToRipe;
 	}

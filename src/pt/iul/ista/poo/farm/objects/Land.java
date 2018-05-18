@@ -5,11 +5,14 @@ import java.util.Random;
 import org.omg.CORBA.VersionSpecHelper;
 
 import pt.iul.ista.poo.farm.Farm;
-import pt.iul.ista.poo.gui.ImageMatrixGUI;
-import pt.iul.ista.poo.gui.ImageTile;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Land extends FarmObject implements Interactable  {
+	@Override
+	public String toString() {
+		return "Land "  + getPosition().getX() + ";" + getPosition().getY() + " " + plowed + " " + rocky;
+	}
+
 	private boolean plowed;
 	private boolean rocky;
 
@@ -59,11 +62,6 @@ public class Land extends FarmObject implements Interactable  {
 
 	}
 
-	public void addRock( Land a){
-	
-	
-	
-	}
 	
 	@Override
 	public String getName(){

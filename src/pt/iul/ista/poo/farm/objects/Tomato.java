@@ -15,7 +15,7 @@ public class Tomato extends Vegetable {
 
 	//conta o numero de ciclos que passaram desde a ultima vez que foi cuidado
 	public int cyclesAfterTakenCare;
-
+	public int position;
 	/**
 	 * 
 	 * @param position - posicao do tomate 
@@ -25,6 +25,11 @@ public class Tomato extends Vegetable {
 	public Tomato(Point2D position) {
 		super(position, 15, 25);
 		this.cyclesAfterTakenCare = 0;
+	}
+
+	@Override
+	public String toString() {
+		return "Tomato " + getPosition().getX() + ";" + getPosition().getY() + " " + cyclesAfterTakenCare + " " + getCyclesToRipe() + " " + getCyclesToRot();
 	}
 
 	public int getCyclesAfterTakenCare() {

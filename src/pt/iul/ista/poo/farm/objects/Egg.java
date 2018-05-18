@@ -9,6 +9,11 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Egg extends FarmObject implements Interactable, Updatable, Scorable {
 
+	@Override
+	public String toString() {
+		return "Egg " + getPosition().getX() + ";" + getPosition().getY() + " " + cycleCount;
+	}
+
 	private int cycleCount;
 
 

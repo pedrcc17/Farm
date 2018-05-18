@@ -4,6 +4,10 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Cabbage extends Vegetable {
 
+	@Override
+	public String toString() {
+		return "Cabbage" + " " + getPosition().getX() + ";" + getPosition().getY() + " " + getCyclesToRipe() + " " + getCyclesToRot();
+	}
 	public int Cycle;
 	
 	public void setCycle(int cycle) {

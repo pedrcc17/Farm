@@ -5,6 +5,11 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Sheep extends Animal {
 
+	@Override
+	public String toString() {
+		return "Sheep " + getPosition().getX() + ";" + getPosition().getY() + " " + cyclesSinceEaten + " " +  starving + " " ;
+	}
+
 	private int cyclesSinceEaten;
 	private boolean starving;
 	
