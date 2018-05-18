@@ -34,7 +34,7 @@ public class Land extends FarmObject implements Interactable  {
 		if(rnd.nextBoolean() == true)
 			veg = new Cabbage(this.getPosition());
 		else veg = new Tomato(this.getPosition());
-		Farm.getInstance().addImageToList(veg);
+		Farm.getInstance().addObject(veg);
 	}
 
 

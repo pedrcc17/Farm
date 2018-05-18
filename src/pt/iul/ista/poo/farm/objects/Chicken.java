@@ -40,7 +40,7 @@ public class Chicken extends Animal {
 
 	private void layEgg(){
 		Egg egg = new Egg(getPosition());
-		Farm.getInstance().addImageToList(egg);
+		Farm.getInstance().addObject(egg);
 	}
 
 	private void removeChicken(){

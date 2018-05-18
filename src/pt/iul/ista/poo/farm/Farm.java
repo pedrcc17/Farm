@@ -132,21 +132,21 @@ public class Farm implements Observer {
 	//	 metodo que retorna o objecto que devera ser interagido com base no layer
 	//	 exemplo: caso haja Land e Vegetable numa mesma posicao, a funcao ira
 	//	                    retornar o vegetable (pois tem maior layer)
-	public Interactable getObjectByPosition(Point2D newPosition){
+	public FarmObject getObjectByPosition(Point2D newPosition){
 		//lista com o objetivo de guardar os objetos interactable com a mesma posicao
 		List<FarmObject> samePositionObjects = new ArrayList<FarmObject>();
 		int higherLayer = 0;
 		for(FarmObject f : farmObjects){
-			if(f instanceof Interactable){
+//			if(f instanceof Interactable){
 				if(f.getPosition().equals(newPosition))   //caso o objecto tenha a mesma posicao 
 					samePositionObjects.add(f);        //da que queremos, adiciona o objecto a lista
 			}
-		}
+//		}
 		for(int i = 0 ; i < samePositionObjects.size() ; i++){  //percorre a lista de objetos com a mesma position
 			higherLayer = Math.max(higherLayer, samePositionObjects.get(i).getLayer()); //determina o maior layer
 		}
 		for(FarmObject fo : samePositionObjects){
-			if(fo.getLayer() == higherLayer) return (Interactable) fo; //retorna o objeto com maior layer da lista
+			if(fo.getLayer() == higherLayer) return fo; //retorna o objeto com maior layer da lista
 		}
 		return null;
 	}
@@ -154,7 +154,7 @@ public class Farm implements Observer {
 	//TODO
 	//ovelha ainda passa por cima de farmer
 	public boolean canMove(Point2D pos){
-		Interactable i = getObjectByPosition(pos);
+		FarmObject i = getObjectByPosition(pos);
 		if(! ImageMatrixGUI.getInstance().isWithinBounds(pos))
 			return false;
 		if( i instanceof Land )
@@ -165,13 +165,13 @@ public class Farm implements Observer {
 			}
 
 
-	public void addImageToList(FarmObject farmObj){
+	public void addObject(FarmObject farmObj){
 		farmObjects.add(farmObj);
 		ImageMatrixGUI.getInstance().addImage(farmObj);
 		ImageMatrixGUI.getInstance().update();
 	}
 	
-	public void removeImageFromList(FarmObject farmObj){
+	public void removeObjects(FarmObject farmObj){
 		farmObjects.remove(farmObj);
 		ImageMatrixGUI.getInstance().removeImage(farmObj);
 		ImageMatrixGUI.getInstance().update();
@@ -183,7 +183,7 @@ public class Farm implements Observer {
 	}
 	
 	public void removeObject(Point2D objectPosition){
-		Interactable object = getObjectByPosition(objectPosition);
+		FarmObject object = getObjectByPosition(objectPosition);
 		farmObjects.remove(object);
 		ImageMatrixGUI.getInstance().removeImage((ImageTile)object);
 		ImageMatrixGUI.getInstance().update();			
@@ -220,15 +220,17 @@ public class Farm implements Observer {
 				//TODO
 //				if(! ImageMatrixGUI.getInstance().isWithinBounds(Direction.isDirection(key)))
 //						return;
-				incrementCycle();
+//				incrementCycle();
 				System.out.println("Update is a Direction " + Direction.directionFor(key));
 				if(farmer.isInteract()){
 					Point2D newPosition = farmer.getPosition().plus(Direction.directionFor(key).asVector());
-					Interactable i = getObjectByPosition(newPosition);
+					Interactable i = (Interactable) getObjectByPosition(newPosition);
 					i.interact();
 					farmer.setInteract(false);
 				}
 				else farmer.moveTo(Direction.directionFor(key));
+				
+				incrementCycle();
 			} else if (key == 32) {
 				farmer.setInteract(true);
 			}

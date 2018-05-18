@@ -1,9 +1,6 @@
 package pt.iul.ista.poo.farm.objects;
 
-import java.util.Random;
-
 import pt.iul.ista.poo.farm.Farm;
-import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;
 
@@ -44,7 +41,7 @@ public class Egg extends FarmObject implements Interactable, Updatable, Scorable
 	private void hatchChicken(){
 		Farm.getInstance().removeObject(getPosition());
 		Chicken newChicken = new Chicken(chickenSpawnPosition());
-		Farm.getInstance().addImageToList(newChicken);
+		Farm.getInstance().addObject(newChicken);
 }
 
 //TODO igual no animal ( moveandeat() ) se a posicao nao for uma que se possa mexer, ele precisa encontrar outra - fazer um while ? abaixo
