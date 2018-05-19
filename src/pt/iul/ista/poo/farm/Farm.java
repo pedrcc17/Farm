@@ -116,6 +116,7 @@ public class Farm implements Observer {
 		List<ImageTile> farmLoad = new ArrayList<ImageTile>();
 		try {
 			Scanner read = new Scanner(new File("FarmSave.txt"));
+//			ImageMatrixGUI.getInstance().clearImages();
 			String line = read.nextLine();
 			String[] size = line.split(" ");
 			ImageMatrixGUI.setSize(Integer.parseInt(size[0]), Integer.parseInt(size[1]));
@@ -195,15 +196,20 @@ public class Farm implements Observer {
 			((Vegetable) a).setCyclesToRot(Integer.parseInt(obj[4]));
 
 			return a;
-		} else {
+			
+		} 
+		
+		if(obj[0].equals("Farmer")){
 			String[] position = obj[1].split(";");
 			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-			Farmer a = new Farmer(point);
+			farmer = new Farmer(point);
 			if (obj[2].equals("true"))
-				a.setInteract(true);
-			return a;
+				farmer.setInteract(true);
 
+			return farmer;	
 		}
+		
+	return null;	
 	}
 
 	public void writeScenario() {
