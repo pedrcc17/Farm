@@ -3,8 +3,8 @@
 Farmer 2;0 false
 Sheep 1;0 0 false 
 Sheep 3;4 27 true 
-Chicken 2;627
-Chicken 0;227
+Chicken 2;6 27
+Chicken 0;2 27
 Land 0;0 false true
 Land 0;1 false false
 Land 0;2 false false

@@ -76,7 +76,7 @@ public class Farm implements Observer {
 		return randomPos;
 	}
 
-	private void registerAll() {
+	public void registerAll() {
 		List<ImageTile> images = new ArrayList<ImageTile>();
 
 		Point2D farmerInitialPosition = new Point2D(0, 0);
@@ -113,97 +113,98 @@ public class Farm implements Observer {
 
 	public void loadScenario() {
 
-//		try {
-//			List<ImageTile> farmLoad = new ArrayList<ImageTile>();
-//			Scanner read = new Scanner(new File("FarmSave.txt"));
-//			String line = read.nextLine();
-//			String[] size = line.split(" ");
-//			ImageMatrixGUI.setSize(Integer.parseInt(size[0]), Integer.parseInt(size[1]));
-//			setPoints(read.nextInt());
-//			while (read.hasNextLine()) {
-//				String Objects = read.nextLine();
-//				String[] obj = Objects.split(" ");
-//				farmObjects.add(getObject(obj));
-//				farmLoad.addAll(farmObjects);
-//				ImageMatrixGUI.getInstance().addImages(farmLoad);
-//				ImageMatrixGUI.getInstance().update();
-//			}
-//
-//			read.close();
-//		} catch (FileNotFoundException e) {
-//			System.out.println("Erro na abertura de Ficheiro de leitura");
+		List<ImageTile> farmLoad = new ArrayList<ImageTile>();
+		try {
+			Scanner read = new Scanner(new File("FarmSave.txt"));
+			String line = read.nextLine();
+			String[] size = line.split(" ");
+			ImageMatrixGUI.setSize(Integer.parseInt(size[0]), Integer.parseInt(size[1]));
+			setPoints(read.nextInt());
+			read.nextLine();
+			while (read.hasNextLine()) {
+				String Objects = read.nextLine();
+				String[] obj = Objects.split(" ");
+				farmObjects.add(getObject(obj));
+				farmLoad.addAll(farmObjects);
+				ImageMatrixGUI.getInstance().addImages(farmLoad);
+				ImageMatrixGUI.getInstance().update();
+			}
+
+			read.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Erro na abertura de Ficheiro de leitura");
 			registerAll();
 
 		}
-//	}
+	}
 
-//	public FarmObject getObject(String[] obj) {
-//		if (obj[0].equals("Land")) {
-//			String[] position = obj[1].split(";");
-//			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-//			Land a = new Land(point);
-//			if (obj[2].equals("true"))
-//				a.setPlowed(true);
-//			if (obj[3].equals("true"))
-//				a.setRocky(true);
-//			return a;
-//		}
-//
-//		if (obj[0].equals("Sheep")) {
-//			String[] position = obj[1].split(";");
-//			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-//			Sheep a = new Sheep(point);
-//			if (obj[3].equals("true"))
-//				a.setStarving(true);
-//			a.setCyclesSinceEaten(Integer.parseInt(obj[2]));
-//			return a;
-//		}
-//
-//		if (obj[0].equals("Chicken")) {
-//			String[] position = obj[1].split(";");
-//			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-//			Chicken a = new Chicken(point);
-//			a.setCycleCount(Integer.parseInt(obj[2]));
-//			return a;
-//		}
-//
-//		if (obj[0].equals("Egg")) {
-//			String[] position = obj[1].split(";");
-//			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-//			Egg a = new Egg(point);
-//			a.setCycleCount(Integer.parseInt(obj[2]));
-//			return a;
-//		}
-//
-//		if (obj[0].equals("Tomato")) {
-//			String[] position = obj[1].split(";");
-//			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-//			FarmObject a = new Tomato(point);
-//			((Tomato) a).setCyclesAfterTakenCare(Integer.parseInt(obj[2]));
-//			((Vegetable) a).setCyclesToRipe(Integer.parseInt(obj[3]));
-//			((Vegetable) a).setCyclesToRot(Integer.parseInt(obj[4]));
-//
-//			return a;
-//		}
-//
-//		if (obj[0].equals("Cabbage")) {
-//			String[] position = obj[1].split(";");
-//			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-//			FarmObject a = new Cabbage(point);
-//			((Vegetable) a).setCyclesToRipe(Integer.parseInt(obj[3]));
-//			((Vegetable) a).setCyclesToRot(Integer.parseInt(obj[4]));
-//
-//			return a;
-//		} else {
-//			String[] position = obj[1].split(";");
-//			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-//			Farmer a = new Farmer(point);
-//			if (obj[2].equals("true"))
-//				a.setInteract(true);
-//			return a;
-//
-//		}
-//	}
+	public FarmObject getObject(String[] obj) {
+		if (obj[0].equals("Land")) {
+			String[] position = obj[1].split(";");
+			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
+			Land a = new Land(point);
+			if (obj[2].equals("true"))
+				a.setPlowed(true);
+			if (obj[3].equals("true"))
+				a.setRocky(true);
+			return a;
+		}
+
+		if (obj[0].equals("Sheep")) {
+			String[] position = obj[1].split(";");
+			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
+			Sheep a = new Sheep(point);
+			if (obj[3].equals("true"))
+				a.setStarving(true);
+			a.setCyclesSinceEaten(Integer.parseInt(obj[2]));
+			return a;
+		}
+
+		if (obj[0].equals("Chicken")) {
+			String[] position = obj[1].split(";");
+			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
+			Chicken a = new Chicken(point);
+			a.setCycleCount(Integer.parseInt(obj[2]));
+			return a;
+		}
+
+		if (obj[0].equals("Egg")) {
+			String[] position = obj[1].split(";");
+			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
+			Egg a = new Egg(point);
+			a.setCycleCount(Integer.parseInt(obj[2]));
+			return a;
+		}
+
+		if (obj[0].equals("Tomato")) {
+			String[] position = obj[1].split(";");
+			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
+			FarmObject a = new Tomato(point);
+			((Tomato) a).setCyclesAfterTakenCare(Integer.parseInt(obj[2]));
+			((Vegetable) a).setCyclesToRipe(Integer.parseInt(obj[3]));
+			((Vegetable) a).setCyclesToRot(Integer.parseInt(obj[4]));
+
+			return a;
+		}
+
+		if (obj[0].equals("Cabbage")) {
+			String[] position = obj[1].split(";");
+			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
+			FarmObject a = new Cabbage(point);
+			((Vegetable) a).setCyclesToRipe(Integer.parseInt(obj[3]));
+			((Vegetable) a).setCyclesToRot(Integer.parseInt(obj[4]));
+
+			return a;
+		} else {
+			String[] position = obj[1].split(";");
+			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
+			Farmer a = new Farmer(point);
+			if (obj[2].equals("true"))
+				a.setInteract(true);
+			return a;
+
+		}
+	}
 
 	public void writeScenario() {
 
