@@ -150,6 +150,29 @@ public class Farm implements Observer {
 		// registerAll();
 		//
 		// }
+		try {
+			Scanner read = new Scanner(new File("FarmSave.txt"));
+//			ImageMatrixGUI.getInstance().clearImages();
+			String line = read.nextLine();
+			String[] size = line.split(" ");
+			ImageMatrixGUI.setSize(Integer.parseInt(size[0]), Integer.parseInt(size[1]));
+			setPoints(read.nextInt());
+			read.nextLine();
+			while (read.hasNextLine()) {
+				String Objects = read.nextLine();
+				String[] obj = Objects.split(" ");
+				farmObjects.add(getObject(obj));
+				farmLoad.addAll(farmObjects);
+				ImageMatrixGUI.getInstance().addImages(farmLoad);
+				ImageMatrixGUI.getInstance().update();
+			}
+
+			read.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Erro na abertura de Ficheiro de leitura");
+			registerAll();
+
+		}
 	}
 
 	public static FarmObject getObject(String[] obj) {

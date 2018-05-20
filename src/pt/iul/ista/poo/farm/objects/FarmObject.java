@@ -14,9 +14,7 @@ public abstract class FarmObject implements ImageTile {
 		return position = a ;
 	}
 	
-	public void setCycle( FarmObject a, int cycles){
-	
-	}
+
 	
 	@Override
 	public String getName() {
