@@ -83,6 +83,16 @@ public class Tomato extends Vegetable {
 	}
 
 
+	public int getCyclesAfterTakenCare() {
+		return cyclesAfterTakenCare;
+	}
+
+
+	public void setCyclesAfterTakenCare(int cyclesAfterTakenCare) {
+		this.cyclesAfterTakenCare = cyclesAfterTakenCare;
+	}
+
+
 
 
 
