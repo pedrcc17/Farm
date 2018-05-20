@@ -7,11 +7,6 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Farmer extends FarmObject {
 
-	@Override
-	public String toString() {
-		return "Farmer " + getPosition().getX() + ";" + getPosition().getY() + " " + isInteract();
-	}
-
 	private boolean interact;
 
 	public Farmer(Point2D p) {
@@ -58,5 +53,11 @@ public class Farmer extends FarmObject {
 	public int getLayer(){
 		return 4;
 	}
+	
+	@Override
+	public String toString() {
+		return "Farmer (" + getPosition().getX() + "," + getPosition().getY() + ") " + isInteract();
+	}
+	
 }
 
