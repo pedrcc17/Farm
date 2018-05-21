@@ -14,7 +14,7 @@ public class Cabbage extends Vegetable {
 
 	@Override
 	public String toString() {
-		return "Tomato " + getPosition().getX() + ";" + getPosition().getY() + " " + getCyclesToRipe() + " " + getCyclesToRot();
+		return "Cabbage " + getPosition().getX() + ";" + getPosition().getY() + " " + getCyclesToRipe() + " " + getCyclesToRot();
 	}
 	
 	public Cabbage(Point2D position) {

@@ -28,7 +28,6 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Farm implements Observer {
 
-	private Land[][] landMatrix;
 
 	private static final String SAVE_FNAME = "config/savedGame";
 
@@ -78,7 +77,6 @@ public class Farm implements Observer {
 			System.exit(1);
 		}
 	}
-	
 
 	private Point2D randomPosition() {
 		Random rnd = new Random();
@@ -117,30 +115,30 @@ public class Farm implements Observer {
 		ImageMatrixGUI.getInstance().update();
 	}
 
-
 	public void loadScenario() {
 		try {
 			Scanner read = new Scanner(new File("FarmSave.txt"));
-			//TODO e preciso remover as os objectos da lista ?
-			farmObjects.removeAll(farmObjects);
-			ImageMatrixGUI.getInstance().clearImages(); 
-			//ler dimensao da farm 
+			// TODO e preciso remover as os objectos da lista ?
+			farmObjects = new ArrayList<FarmObject>();
+			ImageMatrixGUI.getInstance().clearImages();
+			// ler dimensao da farm
 			String line = read.nextLine();
-			String[] size = line.split(" ");
-			
-//			ImageMatrixGUI.setSize(Integer.parseInt(size[0]), Integer.parseInt(size[1]));
+//			String[] size = line.split(" ");
+
+			// ImageMatrixGUI.setSize(Integer.parseInt(size[0]),
+			// Integer.parseInt(size[1]));
 			// ler numero do pontos
 			points = read.nextInt();
 			read.nextLine();
-			//ler objectos
-			do{
+			// ler objectos
+			do {
 				String objectLine = read.nextLine();
 				String[] objectDefintion = objectLine.split(" ");
 				FarmObject farmObject = createObject(objectDefintion);
 				farmObjects.add(farmObject);
 				ImageMatrixGUI.getInstance().addImage(farmObject);
 				ImageMatrixGUI.getInstance().update();
-				
+
 			} while (read.hasNextLine());
 
 			read.close();
@@ -150,33 +148,34 @@ public class Farm implements Observer {
 		}
 	}
 
-	public static FarmObject createObject(String [] objectDefintion) {
+	public FarmObject createObject(String[] objectDefintion) {
 		String[] position = objectDefintion[1].split(";");
 		Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
 		String objectName = objectDefintion[0];
 		FarmObject a = null;
-		switch(objectName){
-		case "Land" :
-			a = new Land(point, new Boolean(objectDefintion[2]), new Boolean(objectDefintion[3]) );
+		switch (objectName) {
+		case "Land":
+			a = new Land(point, new Boolean(objectDefintion[2]), new Boolean(objectDefintion[3]));
 			return a;
-		case "Sheep" :
-			a = new Sheep(point, new Integer(objectDefintion[2]), new Boolean(objectDefintion[3]) );
+		case "Sheep":
+			a = new Sheep(point, new Integer(objectDefintion[2]), new Boolean(objectDefintion[3]));
 			return a;
-		case "Chicken" :
+		case "Chicken":
 			a = new Chicken(point, new Integer(objectDefintion[2]));
 			return a;
-		case "Egg" :
+		case "Egg":
 			a = new Egg(point, new Integer(objectDefintion[2]));
 			return a;
-		case  "Tomato" :
-			a = new Tomato(point, new Integer(objectDefintion[2]), new Integer(objectDefintion[3]), new Integer(objectDefintion[4]));
+		case "Tomato":
+			a = new Tomato(point, new Integer(objectDefintion[2]), new Integer(objectDefintion[3]),
+					new Integer(objectDefintion[4]));
 			return a;
-		case "Cabbage" :
+		case "Cabbage":
 			a = new Cabbage(point, new Integer(objectDefintion[2]), new Integer(objectDefintion[3]));
 			return a;
-		case "Farmer" : 
-//			a = new Farmer(point, new Boolean(objectDefintion[2]));
-			return a;
+		case "Farmer":
+			farmer = new Farmer(point, new Boolean(objectDefintion[2]));
+			return farmer;
 		}
 		return null;
 	}
@@ -241,7 +240,6 @@ public class Farm implements Observer {
 		return null;
 	}
 
- 
 	public boolean canMove(Point2D pos) {
 		FarmObject i = getObjectByPosition(pos);
 		if (!ImageMatrixGUI.getInstance().isWithinBounds(pos))
@@ -266,13 +264,12 @@ public class Farm implements Observer {
 	public void removeObject(Point2D objectPosition) {
 		FarmObject object = getObjectByPosition(objectPosition);
 		farmObjects.remove(object);
-		if(object instanceof Vegetable)
+		if (object instanceof Vegetable)
 			unPlow(objectPosition);
 		ImageMatrixGUI.getInstance().removeImage((ImageTile) object);
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	
 	private void unPlow(Point2D position) {
 		Land land = (Land) getObjectByPosition(position);
 		land.setPlowed(false);
@@ -281,7 +278,6 @@ public class Farm implements Observer {
 	@Override
 	public void update(Observable gui, Object a) {
 		System.out.println("Update sent " + a);
-		// TODO
 		if (a instanceof Integer) {
 			// sempre que e clicada uma tecla lança o incrementCycle() definido
 			// acima
@@ -290,20 +286,17 @@ public class Farm implements Observer {
 			// quando interacao tiver ativada, escolhe-se a direcao que se quer
 			// interagir(tecla direcao) -> farmer interage com land e nao se
 			// move
-//			System.out.println(a);
+			// System.out.println(a);
 			int key = (Integer) a;
-			if (key == 76) 
+			if (key == 76)
 				loadScenario();
-			if(key == 83)
+			if (key == 83)
 				writeScenario();
-				
-			
+
 			if (Direction.isDirection(key)) {
-				// TODO
-				// if(!
-				// ImageMatrixGUI.getInstance().isWithinBounds(Direction.isDirection(key)))
-				// return;
-				// incrementCycle();
+				if (!ImageMatrixGUI.getInstance()
+						.isWithinBounds(farmer.getPosition().plus(Direction.directionFor(key).asVector())))
+					return;
 				System.out.println("Update is a Direction " + Direction.directionFor(key));
 				if (farmer.isInteract()) {
 					Point2D newPosition = farmer.getPosition().plus(Direction.directionFor(key).asVector());
