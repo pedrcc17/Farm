@@ -12,12 +12,19 @@ public class Sheep extends Animal {
 
 	private int cyclesSinceEaten;
 	private boolean starving;
-	
+
 	public Sheep(Point2D p){
 		super(p);
 		cyclesSinceEaten = 0;
 	}
 
+	public Sheep(Point2D p, int cyclesSinceEaten, boolean starving){
+		super(p);
+		this.cyclesSinceEaten = cyclesSinceEaten;
+		this.starving = starving;
+	}
+
+	
 	public int getCyclesSinceEaten() {
 		return cyclesSinceEaten;
 	}

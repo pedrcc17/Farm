@@ -12,6 +12,11 @@ public class Farmer extends FarmObject {
 	public Farmer(Point2D p) {
 		super(p);
 	}
+	
+	public Farmer(Point2D p, boolean interact){
+		super(p);
+		this.interact = interact;
+	}
 
 	public void moveTo(Direction b) {
 		Point2D newPosition = null;
@@ -56,7 +61,7 @@ public class Farmer extends FarmObject {
 	
 	@Override
 	public String toString() {
-		return "Farmer (" + getPosition().getX() + "," + getPosition().getY() + ") " + isInteract();
+		return "Farmer " + getPosition().getX() + ";" + getPosition().getY() + " " + isInteract();
 	}
 	
 }

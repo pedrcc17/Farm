@@ -13,6 +13,11 @@ import pt.iul.ista.poo.utils.Point2D;
 
 
 public class Tomato extends Vegetable {
+	
+	@Override
+	public String toString() {
+		return "Tomato " + getPosition().getX() + ";" + getPosition().getY() + " " + getCyclesToRipe() + " " + getCyclesToRot() + " " + cyclesAfterTakenCare;
+	}
 
 
 	private int cyclesAfterTakenCare;    //contador de ciclos desde que foi cuidado a ultima vez
@@ -25,6 +30,15 @@ public class Tomato extends Vegetable {
 		super(position, 15, 25);
 		this.cyclesAfterTakenCare = 0;
 	}
+	
+	public Tomato(Point2D p, int cyclesToRipe, int cyclesToRot, int cyclesAfterTakenCare){
+		super(p, 15, 25);
+		setCyclesToRipe(cyclesToRipe);
+		setCyclesToRot(cyclesToRot);
+		this.cyclesAfterTakenCare = cyclesAfterTakenCare;
+	}
+	
+
 
 	
 	/**
@@ -91,6 +105,8 @@ public class Tomato extends Vegetable {
 	public void setCyclesAfterTakenCare(int cyclesAfterTakenCare) {
 		this.cyclesAfterTakenCare = cyclesAfterTakenCare;
 	}
+	
+
 
 
 

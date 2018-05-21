@@ -20,6 +20,13 @@ public class Chicken extends Animal {
 		super(p);
 		cycleCount = 0;
 	}
+	
+	
+	public Chicken(Point2D p, int cycleCount){
+		super(p);
+		this.cycleCount = cycleCount;
+	}
+	
 
 	public void setCycleCount(int cycleCount) {
 		this.cycleCount = cycleCount;

@@ -62,8 +62,7 @@ public class Farm implements Observer {
 
 		// Nao usar ImageMatrixGUI antes de inicializar o tamanho
 		// TODO
-
-		loadScenario();
+		registerAll();
 
 	}
 
@@ -118,129 +117,68 @@ public class Farm implements Observer {
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	public void setPoints(int p) {
-		points = p;
-	}
 
 	public void loadScenario() {
-
-		registerAll();
-		// try {
-		// List<ImageTile> farmLoad = new ArrayList<ImageTile>();
-		// Scanner read = new Scanner(new File("FarmSave.txt"));
-		// String line = read.nextLine();
-		// String[] size = line.split(" ");
-		// ImageMatrixGUI.setSize(Integer.parseInt(size[0]),
-		// Integer.parseInt(size[1]));
-		// setPoints(read.nextInt());
-		// while (read.hasNextLine() == true) {
-		// String Objects = read.nextLine();
-		// String[] obj = Objects.split(" ");
-		// if (obj.length > 0){
-		// farmLoad.add(getObject(obj));
-		// farmLoad.addAll(farmObjects);
-		// ImageMatrixGUI.getInstance().addImages(farmLoad);
-		// ImageMatrixGUI.getInstance().update();
-		// }
-		// }
-		//
-		// read.close();
-		// } catch (FileNotFoundException e) {
-		// System.out.println("Erro na abertura de Ficheiro de leitura");
-		// registerAll();
-		//
-		// }
-//		try {
-//			Scanner read = new Scanner(new File("FarmSave.txt"));
-////			ImageMatrixGUI.getInstance().clearImages();
-//			String line = read.nextLine();
-//			String[] size = line.split(" ");
+		try {
+			Scanner read = new Scanner(new File("FarmSave.txt"));
+			//TODO e preciso remover as os objectos da lista ?
+			farmObjects.removeAll(farmObjects);
+			ImageMatrixGUI.getInstance().clearImages(); 
+			//ler dimensao da farm 
+			String line = read.nextLine();
+			String[] size = line.split(" ");
+			
 //			ImageMatrixGUI.setSize(Integer.parseInt(size[0]), Integer.parseInt(size[1]));
-//			setPoints(read.nextInt());
-//			read.nextLine();
-//			while (read.hasNextLine()) {
-//				String Objects = read.nextLine();
-//				String[] obj = Objects.split(" ");
-//				farmObjects.add(getObject(obj));
-//				farmLoad.addAll(farmObjects);
-//				ImageMatrixGUI.getInstance().addImages(farmLoad);
-//				ImageMatrixGUI.getInstance().update();
-//			}
-//
-//			read.close();
-//		} catch (FileNotFoundException e) {
-//			System.out.println("Erro na abertura de Ficheiro de leitura");
-//			registerAll();
-//
-//		}
+			// ler numero do pontos
+			points = read.nextInt();
+			read.nextLine();
+			//ler objectos
+			do{
+				String objectLine = read.nextLine();
+				String[] objectDefintion = objectLine.split(" ");
+				FarmObject farmObject = createObject(objectDefintion);
+				farmObjects.add(farmObject);
+				ImageMatrixGUI.getInstance().addImage(farmObject);
+				ImageMatrixGUI.getInstance().update();
+				
+			} while (read.hasNextLine());
+
+			read.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Erro na abertura de Ficheiro de leitura");
+			System.exit(1);
+		}
 	}
 
-	public static FarmObject getObject(String[] obj) {
-		if (obj[0].equals("Land")) {
-			String[] position = obj[1].split(";");
-			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-			Land a = new Land(point);
-			if (obj[2].equals("true"))
-				a.setPlowed(true);
-			if (obj[3].equals("true"))
-				a.setRocky(true);
+	public static FarmObject createObject(String [] objectDefintion) {
+		String[] position = objectDefintion[1].split(";");
+		Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
+		String objectName = objectDefintion[0];
+		FarmObject a = null;
+		switch(objectName){
+		case "Land" :
+			a = new Land(point, new Boolean(objectDefintion[2]), new Boolean(objectDefintion[3]) );
+			return a;
+		case "Sheep" :
+			a = new Sheep(point, new Integer(objectDefintion[2]), new Boolean(objectDefintion[3]) );
+			return a;
+		case "Chicken" :
+			a = new Chicken(point, new Integer(objectDefintion[2]));
+			return a;
+		case "Egg" :
+			a = new Egg(point, new Integer(objectDefintion[2]));
+			return a;
+		case  "Tomato" :
+			a = new Tomato(point, new Integer(objectDefintion[2]), new Integer(objectDefintion[3]), new Integer(objectDefintion[4]));
+			return a;
+		case "Cabbage" :
+			a = new Cabbage(point, new Integer(objectDefintion[2]), new Integer(objectDefintion[3]));
+			return a;
+		case "Farmer" : 
+//			a = new Farmer(point, new Boolean(objectDefintion[2]));
 			return a;
 		}
-
-		if (obj[0].equals("Sheep")) {
-			String[] position = obj[1].split(";");
-			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-			Sheep a = new Sheep(point);
-			if (obj[3].equals("true"))
-				a.setStarving(true);
-			a.setCyclesSinceEaten(Integer.parseInt(obj[2]));
-			return a;
-		}
-
-		if (obj[0].equals("Chicken")) {
-			String[] position = obj[1].split(";");
-			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-			Chicken a = new Chicken(point);
-			a.setCycleCount(Integer.parseInt(obj[2]));
-			return a;
-		}
-
-		if (obj[0].equals("Egg")) {
-			String[] position = obj[1].split(";");
-			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-			Egg a = new Egg(point);
-			a.setCycleCount(Integer.parseInt(obj[2]));
-			return a;
-		}
-
-		if (obj[0].equals("Tomato")) {
-			String[] position = obj[1].split(";");
-			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-			FarmObject a = new Tomato(point);
-			((Tomato) a).setCyclesAfterTakenCare(Integer.parseInt(obj[2]));
-			((Vegetable) a).setCyclesToRipe(Integer.parseInt(obj[3]));
-			((Vegetable) a).setCyclesToRot(Integer.parseInt(obj[4]));
-
-			return a;
-		}
-
-		if (obj[0].equals("Cabbage")) {
-			String[] position = obj[1].split(";");
-			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-			FarmObject a = new Cabbage(point);
-			((Vegetable) a).setCyclesToRipe(Integer.parseInt(obj[3]));
-			((Vegetable) a).setCyclesToRot(Integer.parseInt(obj[4]));
-
-			return a;
-		} else {
-			String[] position = obj[1].split(";");
-			Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
-			Farmer a = new Farmer(point);
-			if (obj[2].equals("true"))
-				a.setInteract(true);
-			return a;
-
-		}
+		return null;
 	}
 
 	public void writeScenario() {
@@ -256,7 +194,7 @@ public class Farm implements Observer {
 			write.close();
 
 		} catch (FileNotFoundException e) {
-			System.out.println("Erro de escrita no ficheiro leitura");
+			System.out.println("Erro de escrita no ficheiro");
 		}
 	}
 
@@ -303,8 +241,7 @@ public class Farm implements Observer {
 		return null;
 	}
 
-	// TODO
-	// ovelha ainda passa por cima de farmer
+ 
 	public boolean canMove(Point2D pos) {
 		FarmObject i = getObjectByPosition(pos);
 		if (!ImageMatrixGUI.getInstance().isWithinBounds(pos))
@@ -322,12 +259,6 @@ public class Farm implements Observer {
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	public void removeObjects(FarmObject farmObj) {
-		farmObjects.remove(farmObj);
-		ImageMatrixGUI.getInstance().removeImage(farmObj);
-		ImageMatrixGUI.getInstance().update();
-	}
-
 	public void addPoints(int numberOfPoints) {
 		points = points + numberOfPoints;
 	}
@@ -335,18 +266,13 @@ public class Farm implements Observer {
 	public void removeObject(Point2D objectPosition) {
 		FarmObject object = getObjectByPosition(objectPosition);
 		farmObjects.remove(object);
+		if(object instanceof Vegetable)
+			unPlow(objectPosition);
 		ImageMatrixGUI.getInstance().removeImage((ImageTile) object);
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	public void removeVegetable(Point2D vegPosition) {
-		Vegetable veg = (Vegetable) getObjectByPosition(vegPosition);
-		farmObjects.remove(veg);
-		ImageMatrixGUI.getInstance().removeImage((ImageTile) veg);
-		unPlow(vegPosition);
-		ImageMatrixGUI.getInstance().update();
-	}
-
+	
 	private void unPlow(Point2D position) {
 		Land land = (Land) getObjectByPosition(position);
 		land.setPlowed(false);
@@ -364,10 +290,14 @@ public class Farm implements Observer {
 			// quando interacao tiver ativada, escolhe-se a direcao que se quer
 			// interagir(tecla direcao) -> farmer interage com land e nao se
 			// move
+//			System.out.println(a);
 			int key = (Integer) a;
-			if (key == 76) {
+			if (key == 76) 
+				loadScenario();
+			if(key == 83)
 				writeScenario();
-			}
+				
+			
 			if (Direction.isDirection(key)) {
 				// TODO
 				// if(!

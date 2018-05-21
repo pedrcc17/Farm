@@ -12,8 +12,19 @@ import pt.iul.ista.poo.utils.Point2D;
  */
 public class Cabbage extends Vegetable {
 
+	@Override
+	public String toString() {
+		return "Tomato " + getPosition().getX() + ";" + getPosition().getY() + " " + getCyclesToRipe() + " " + getCyclesToRot();
+	}
+	
 	public Cabbage(Point2D position) {
 		super(position, 10, 30);
+	}
+	
+	public Cabbage(Point2D p, int cyclesToRipe, int cyclesToRot){
+		super(p, 10, 30);
+		setCyclesToRipe(cyclesToRipe);
+		setCyclesToRot(cyclesToRot);
 	}
 
 /**

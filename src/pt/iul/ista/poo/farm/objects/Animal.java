@@ -27,7 +27,7 @@ public abstract class Animal extends FarmObject implements Interactable, Updatab
 		if(!(Farm.getInstance().canMove(newPosition)))
 			return;
 		if(canEatVegetable(newPosition))
-			Farm.getInstance().removeVegetable(newPosition);
+			Farm.getInstance().removeObject(newPosition);
 		else 
 			setPosition(newPosition);
 	}

@@ -22,6 +22,12 @@ public class Land extends FarmObject implements Interactable  {
 		plowed = false;
 		rocky = rockRandomizer();
 	}
+	
+	public Land(Point2D p, boolean plowed, boolean rocky) {
+		super(p);
+		this.plowed = plowed;
+		this.rocky = rocky;
+	}
 
 	@Override
 	public void interact(){
