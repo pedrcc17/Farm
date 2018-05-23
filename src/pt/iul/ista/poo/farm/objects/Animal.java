@@ -3,7 +3,6 @@ package pt.iul.ista.poo.farm.objects;
 
 
 import pt.iul.ista.poo.farm.Farm;
-import pt.iul.ista.poo.gui.ImageMatrixGUI;
 import pt.iul.ista.poo.utils.Direction;
 import pt.iul.ista.poo.utils.Point2D;
 

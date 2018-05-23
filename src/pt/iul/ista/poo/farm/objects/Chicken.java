@@ -7,10 +7,7 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Chicken extends Animal {
 
-	@Override
-	public String toString() {
-		return "Chicken " + getPosition().getX() + ";" + getPosition().getY() + " " + cycleCount;
-	}
+	
 
 	private int cycleCount;
 
@@ -28,9 +25,6 @@ public class Chicken extends Animal {
 	}
 	
 
-	public void setCycleCount(int cycleCount) {
-		this.cycleCount = cycleCount;
-	}
 
 	@Override
 	public void interact(){
@@ -74,6 +68,11 @@ public class Chicken extends Animal {
 	@Override
 	public String getName(){
 		return "chicken";
+	}
+	
+	@Override
+	public String toString() {
+		return "Chicken " + getPosition().getX() + ";" + getPosition().getY() + " " + cycleCount;
 	}
 
 

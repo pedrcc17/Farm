@@ -1,49 +1,44 @@
 5 7
-53
-Farmer 0;1 false
-Sheep 2;6 139 true 
-Sheep 0;2 139 true 
+12
+Farmer 2;0 false
+Sheep 0;4 6 false 
+Sheep 1;3 6 false 
+Chicken 1;2 6
+Chicken 4;6 6
 Land 0;0 false false
 Land 0;1 false false
 Land 0;2 false false
-Land 0;3 false true
+Land 0;3 false false
 Land 0;4 false false
-Land 0;5 false false
+Land 0;5 false true
 Land 0;6 false false
-Land 1;0 false false
-Land 1;1 false false
+Land 1;0 true false
+Land 1;1 false true
 Land 1;2 false false
-Land 1;3 false true
-Land 1;4 false true
+Land 1;3 false false
+Land 1;4 false false
 Land 1;5 false false
 Land 1;6 false false
-Land 2;0 true false
+Land 2;0 false false
 Land 2;1 true false
-Land 2;2 false true
-Land 2;3 true false
-Land 2;4 false false
+Land 2;2 false false
+Land 2;3 false false
+Land 2;4 false true
 Land 2;5 false false
 Land 2;6 false false
-Land 3;0 false false
-Land 3;1 true false
-Land 3;2 true false
+Land 3;0 false true
+Land 3;1 false false
+Land 3;2 false false
 Land 3;3 false false
-Land 3;4 true false
+Land 3;4 false false
 Land 3;5 false false
 Land 3;6 false false
-Land 4;0 false true
-Land 4;1 true false
-Land 4;2 true false
-Land 4;3 true false
-Land 4;4 false true
-Land 4;5 true false
-Land 4;6 false false
-Cabbage 2;3 -18 2
-Cabbage 4;3 -17 3
-Tomato 3;2 -3 -1 14
-Cabbage 3;4 -15 5
-Cabbage 4;2 -12 8
-Tomato 4;1 6 6 19
-Tomato 3;1 2 9 12
-Tomato 2;1 6 16 4
-Cabbage 2;0 4 24
+Land 4;0 false false
+Land 4;1 false false
+Land 4;2 false true
+Land 4;3 false false
+Land 4;4 false false
+Land 4;5 false false
+Land 4;6 false true
+Cabbage 2;1 7 27
+Tomato 1;0 14 24 1

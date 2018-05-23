@@ -28,7 +28,6 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Farm implements Observer {
 
-
 	private static final String SAVE_FNAME = "config/savedGame";
 
 	private static final int MIN_X = 5;
@@ -55,12 +54,9 @@ public class Farm implements Observer {
 		this.points = 0;
 
 		farmObjects = new ArrayList<FarmObject>();
-		// objectToRemove = new ArrayList<FarmObject>();
 
 		ImageMatrixGUI.setSize(max_x, max_y);
 
-		// Nao usar ImageMatrixGUI antes de inicializar o tamanho
-		// TODO
 		registerAll();
 
 	}
@@ -72,6 +68,7 @@ public class Farm implements Observer {
 				max_x = fileScanner.nextInt();
 			if (fileScanner.hasNextInt())
 				max_y = fileScanner.nextInt();
+			fileScanner.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("FarmConfiguration.ini not found");
 			System.exit(1);
@@ -115,20 +112,19 @@ public class Farm implements Observer {
 		ImageMatrixGUI.getInstance().update();
 	}
 
-	public void loadScenario() {
+	private void loadScenario() {
 		try {
 			Scanner read = new Scanner(new File("FarmSave.txt"));
-			// TODO e preciso remover as os objectos da lista ?
-			farmObjects = new ArrayList<FarmObject>();
-			ImageMatrixGUI.getInstance().clearImages();
+			farmObjects = new ArrayList<FarmObject>(); // remove todos os
+														// objectos da lista
+			ImageMatrixGUI.getInstance().clearImages(); // limpa as imagens
+
 			// ler dimensao da farm
 			String line = read.nextLine();
-//			String[] size = line.split(" ");
+			String[] size = line.split(" ");
+			ImageMatrixGUI.setSize(Integer.parseInt(size[0]), Integer.parseInt(size[1]));
 
-			// ImageMatrixGUI.setSize(Integer.parseInt(size[0]),
-			// Integer.parseInt(size[1]));
-			// ler numero do pontos
-			points = read.nextInt();
+			points = read.nextInt(); // ler numero do pontos
 			read.nextLine();
 			// ler objectos
 			do {
@@ -140,15 +136,15 @@ public class Farm implements Observer {
 				ImageMatrixGUI.getInstance().update();
 
 			} while (read.hasNextLine());
-
 			read.close();
+
 		} catch (FileNotFoundException e) {
 			System.out.println("Erro na abertura de Ficheiro de leitura");
 			System.exit(1);
 		}
 	}
 
-	public FarmObject createObject(String[] objectDefintion) {
+	private FarmObject createObject(String[] objectDefintion) {
 		String[] position = objectDefintion[1].split(";");
 		Point2D point = new Point2D(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
 		String objectName = objectDefintion[0];
@@ -181,7 +177,6 @@ public class Farm implements Observer {
 	}
 
 	public void writeScenario() {
-
 		try {
 			PrintWriter write = new PrintWriter(new File("FarmSave.txt"));
 			write.println(max_x + " " + max_y);
@@ -191,7 +186,6 @@ public class Farm implements Observer {
 
 			}
 			write.close();
-
 		} catch (FileNotFoundException e) {
 			System.out.println("Erro de escrita no ficheiro");
 		}
@@ -207,35 +201,25 @@ public class Farm implements Observer {
 		}
 	}
 
-	// metodo que retorna o objecto que devera ser interagido com base no layer
-	// exemplo: caso haja Land e Vegetable numa mesma posicao, a funcao ira
-	// retornar o vegetable (pois tem maior layer)
 	public FarmObject getObjectByPosition(Point2D newPosition) {
-		// lista com o objetivo de guardar os objetos interactable com a mesma
-		// posicao
 		List<FarmObject> samePositionObjects = new ArrayList<FarmObject>();
 		int higherLayer = 0;
-		for (FarmObject f : farmObjects) {
-			// if(f instanceof Interactable){
-			if (f.getPosition().equals(newPosition)) // caso o objecto tenha a
-				// mesma posicao
-				samePositionObjects.add(f); // da que queremos, adiciona o
-			// objecto a lista
+		for (FarmObject f : farmObjects) { // procura objectos na posicao
+											// recebida
+			if (f.getPosition().equals(newPosition))
+				samePositionObjects.add(f); // adiciona os objectos na posicao
+											// dada, a uma lista
 		}
-		// }
-		for (int i = 0; i < samePositionObjects.size(); i++) { // percorre a
-			// lista de
-			// objetos com a
-			// mesma
-			// position
-			higherLayer = Math.max(higherLayer, samePositionObjects.get(i).getLayer()); // determina
-			// o
-			// maior
-			// layer
+		for (int i = 0; i < samePositionObjects.size(); i++) { // compara os
+																// layers dos
+																// objectos da
+																// lista
+			higherLayer = Math.max(higherLayer, samePositionObjects.get(i).getLayer());
 		}
 		for (FarmObject fo : samePositionObjects) {
 			if (fo.getLayer() == higherLayer)
-				return fo; // retorna o objeto com maior layer da lista
+				return fo; // retorna o objeto com maior layer na posicao
+							// recebida
 		}
 		return null;
 	}
@@ -279,18 +263,10 @@ public class Farm implements Observer {
 	public void update(Observable gui, Object a) {
 		System.out.println("Update sent " + a);
 		if (a instanceof Integer) {
-			// sempre que e clicada uma tecla lança o incrementCycle() definido
-			// acima
-			// if clicada uma tecla de direcao -> farmer move-se
-			// if clicada tecla de espaço -> ativa a interacao
-			// quando interacao tiver ativada, escolhe-se a direcao que se quer
-			// interagir(tecla direcao) -> farmer interage com land e nao se
-			// move
-			// System.out.println(a);
 			int key = (Integer) a;
-			if (key == 76)
+			if (key == 76) // se clicada tecla "l" carrega o jogo
 				loadScenario();
-			if (key == 83)
+			if (key == 83) // se clicada tecla "s" grava o jogo
 				writeScenario();
 
 			if (Direction.isDirection(key)) {
@@ -307,6 +283,7 @@ public class Farm implements Observer {
 					farmer.moveTo(Direction.directionFor(key));
 
 				incrementCycle();
+
 			} else if (key == 32) {
 				farmer.setInteract(true);
 			}

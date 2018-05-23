@@ -2,16 +2,11 @@ package pt.iul.ista.poo.farm.objects;
 
 import java.util.Random;
 
-import org.omg.CORBA.VersionSpecHelper;
-
 import pt.iul.ista.poo.farm.Farm;
 import pt.iul.ista.poo.utils.Point2D;
 
 public class Land extends FarmObject implements Interactable  {
-	@Override
-	public String toString() {
-		return "Land "  + getPosition().getX() + ";" + getPosition().getY() + " " + plowed + " " + rocky;
-	}
+
 
 	private boolean plowed;
 	private boolean rocky;
@@ -22,7 +17,7 @@ public class Land extends FarmObject implements Interactable  {
 		plowed = false;
 		rocky = rockRandomizer();
 	}
-	
+
 	public Land(Point2D p, boolean plowed, boolean rocky) {
 		super(p);
 		this.plowed = plowed;
@@ -62,25 +57,23 @@ public class Land extends FarmObject implements Interactable  {
 	public void setPlowed(boolean b){
 		this.plowed = b;
 	}
-	
-	public void setRocky(boolean b){
-		this.rocky = b;
 
-	}
 
-	
 	@Override
 	public String getName(){
 		if(rocky) return "rock";
 		if(plowed == false) return "land";
 		else return "plowed";
 	}
-	
+
 	@Override
 	public int getLayer(){
 		return 1;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Land "  + getPosition().getX() + ";" + getPosition().getY() + " " + plowed + " " + rocky;
+	}
 
 }
