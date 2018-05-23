@@ -28,10 +28,7 @@ import pt.iul.ista.poo.utils.Point2D;
 
 public class Farm implements Observer {
 
-	private static final String SAVE_FNAME = "config/savedGame";
-
-	private static final int MIN_X = 5;
-	private static final int MIN_Y = 5;
+	private static final String SAVE_FNAME = "FarmSave.txt";
 
 	private static Farm INSTANCE = null;
 
@@ -114,7 +111,7 @@ public class Farm implements Observer {
 
 	private void loadScenario() {
 		try {
-			Scanner read = new Scanner(new File("FarmSave.txt"));
+			Scanner read = new Scanner(new File(SAVE_FNAME));
 			farmObjects = new ArrayList<FarmObject>(); // remove todos os
 														// objectos da lista
 			ImageMatrixGUI.getInstance().clearImages(); // limpa as imagens
@@ -178,7 +175,7 @@ public class Farm implements Observer {
 
 	public void writeScenario() {
 		try {
-			PrintWriter write = new PrintWriter(new File("FarmSave.txt"));
+			PrintWriter write = new PrintWriter(new File(SAVE_FNAME));
 			write.println(max_x + " " + max_y);
 			write.println(points);
 			for (FarmObject a : farmObjects) {
