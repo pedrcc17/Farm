@@ -173,7 +173,7 @@ public class Farm implements Observer {
 		return null;
 	}
 
-	public void writeScenario() {
+	private void writeScenario() {
 		try {
 			PrintWriter write = new PrintWriter(new File(SAVE_FNAME));
 			write.println(max_x + " " + max_y);

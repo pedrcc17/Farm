@@ -50,14 +50,17 @@ public class Egg extends FarmObject implements Interactable, Updatable, Scorable
 
 
 	private void hatchChicken(){
-		Farm.getInstance().removeObject(getPosition());
-		Chicken newChicken = new Chicken(chickenSpawnPosition());
-		Farm.getInstance().addObject(newChicken);
+		Point2D spawnPosition = chickenSpawnPosition();
+		if(spawnPosition != null){ //galinha so nasce casa exista espaço
+			Farm.getInstance().removeObject(getPosition());
+			Chicken newChicken = new Chicken(spawnPosition);
+			Farm.getInstance().addObject(newChicken);
+		}
 	}
 
 
 	// se nao houver espaço adjacente disponivel para a galinha nascer,
-	//	                            a galinha nasce na posicao do ovo 
+	//	                            a galinha nao nasce
 	// Este caso nao esta especificado no enunciado
 	private Point2D chickenSpawnPosition(){
 		Point2D newPosition = null;
@@ -66,7 +69,7 @@ public class Egg extends FarmObject implements Interactable, Updatable, Scorable
 		newPosition = getPosition().plus(dir.asVector());
 		if(Farm.getInstance().canMove(newPosition))
 			return newPosition;
-		return getPosition();
+		return null;
 	}
 
 	@Override
